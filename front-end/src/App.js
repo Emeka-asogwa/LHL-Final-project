@@ -1,4 +1,5 @@
 import About from "./About";
+import Register from "./Register";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 export default function App() {
@@ -10,6 +11,9 @@ export default function App() {
             <li>
               <Link to="/about">About</Link>
             </li>
+            <li>
+              <Link to="/register">Register</Link>
+            </li>
           </ul>
         </nav>
 
@@ -18,6 +22,9 @@ export default function App() {
         <Switch>
           <Route path="/about">
             <About />
+          </Route>
+          <Route path="/register">
+            <Register />
           </Route>
         </Switch>
       </div>
