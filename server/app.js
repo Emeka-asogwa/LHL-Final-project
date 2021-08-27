@@ -1,3 +1,4 @@
+require('dotenv').config()
 const cors = require("cors"); // cors require
 const createError = require("http-errors");
 const express = require("express");
@@ -14,6 +15,13 @@ const app = express();
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
+
+// PG database client/connection setup
+const { Pool } = require("pg");
+const dbParams = require("./lib/db.js");
+const db = new Pool(dbParams);
+db.on("connect", () => console.log("connnected to database 🥳"));
+db.connect();
 
 app.use(cors()); // CORS middleware useage
 app.use(logger("dev"));
