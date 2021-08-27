@@ -3,8 +3,8 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 
 module.exports = (db) => {
-  router.get("/", (req, res) => {
-    res.render("signup");
+  router.post("/", (req, res) => {
+    res.send("signup");
   });
 
   return router;
