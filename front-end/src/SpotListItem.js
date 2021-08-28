@@ -7,7 +7,8 @@ import Link from '@material-ui/core/Link';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
-import IconButton from '@material-ui/core/IconButton';
+import { Button } from '@material-ui/core';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,11 +29,16 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '100%',
     maxHeight: '100%',
   },
+  button: {
+    margin: theme.spacing(5),
+    marginRight: theme.spacing(0),
+  },
 }));
 
 export default function SpotListItem(props) {
   const classes = useStyles();
   const { title, description, location, url, image_url } = props.location.spot;
+  const history = useHistory();
   
   return (
     <div className={classes.root}>
@@ -66,12 +72,28 @@ export default function SpotListItem(props) {
             </Grid>
           </Grid>
         </Grid>
-        <IconButton>
-          <CancelIcon color="error" fontSize='large'/>
-        </IconButton>
-        <IconButton>
-          <CheckCircleIcon style={{ color: 'green' }} fontSize='large'/>
-        </IconButton>
+        <Button
+            variant="outlined"
+            className={classes.button}
+            startIcon={<CancelIcon color="error" fontSize='large'/>}
+          >
+            Not Interested
+        </Button>
+        <Button
+            variant="outlined"
+            className={classes.button}
+            startIcon={<CheckCircleIcon style={{ color: 'green' }} fontSize='large'/>}
+          >
+            Add to my list
+        </Button>
+        <Button
+          fullWidth
+          variant="contained"
+          color="primary"
+          onClick={ ()=>history.goBack() }
+        >
+          Back
+        </Button>
       </Paper>
     </div>
   );
