@@ -1,6 +1,6 @@
 -- Drop and recreate the User-Spots JOIN table
 
-DROP TABLE IF EXISTS categories CASCADE;
+DROP TABLE IF EXISTS user_spots CASCADE;
 
 CREATE TABLE user_spots (
   id SERIAL PRIMARY KEY NOT NULL,
