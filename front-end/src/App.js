@@ -1,4 +1,6 @@
 import About from "./About";
+import Login from "./Login";
+import HomePage from "./HomePage";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 export default function App() {
@@ -10,6 +12,12 @@ export default function App() {
             <li>
               <Link to="/about">About</Link>
             </li>
+            <li>
+              <Link to="/login"> Login</Link>
+            </li>
+            <li>
+              <Link to="/"> Home</Link>
+            </li>
           </ul>
         </nav>
 
@@ -18,6 +26,12 @@ export default function App() {
         <Switch>
           <Route path="/about">
             <About />
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/">
+            <HomePage />
           </Route>
         </Switch>
       </div>
