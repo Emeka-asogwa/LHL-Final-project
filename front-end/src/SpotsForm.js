@@ -6,11 +6,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import SpotCard from './SpotCard';
+import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
-      margin: theme.spacing(1),
+      display: "flex",
+      margin: theme.spacing(3),
       width: '50ch',
     },
   },
@@ -18,8 +20,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SpotsForm(props) {
   const classes = useStyles();
-  const [location, setLocation] = useState('');
   const { spots } = props;
+  const [location, setLocation] = useState('');
+  const [partner, setPartner] = useState('');
   const [filteredSpots, setFilteredSpots] = useState(spots);
 
   /*function handleSubmit(e) {
@@ -33,13 +36,15 @@ export default function SpotsForm(props) {
   }
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main">
       <CssBaseline />
       <form className={classes.root} noValidate>
         <TextField 
           id="standard-basic"
           label="Partner"
           placeholder="Enter your partner's email"
+          value={partner}
+          onChange={e => setPartner(e.target.value)}
         />
         <TextField 
           id="standard-basic"
@@ -48,19 +53,20 @@ export default function SpotsForm(props) {
           value={location}
           onChange={e => handleOnChange(e)}
         />
-        {/* <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Next
-          </Button> */}
       </form>
-      <div>
+      <Grid container spacing={2}>
         {filteredSpots.map(spot => (<SpotCard spot={spot} />))}
-      </div>
+      </Grid>
+      <Button
+        type="submit"
+        fullWidth
+        variant="contained"
+        color="primary"
+        className={classes.submit}
+        href="/loading"
+      >
+        Generate List
+      </Button>
     </Container>
   )
 }
