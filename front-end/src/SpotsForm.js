@@ -16,6 +16,11 @@ const useStyles = makeStyles((theme) => ({
       width: '50ch',
     },
   },
+  button: {    
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+    width:'50ch',
+  },
 }));
 
 export default function SpotsForm(props) {
@@ -54,19 +59,19 @@ export default function SpotsForm(props) {
           onChange={e => handleOnChange(e)}
         />
       </form>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} alignItems={'center'} justifyContent={'space-evenly'}>
         {filteredSpots.map(spot => (<SpotCard spot={spot} />))}
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          className={classes.button}
+          href="/loading"
+        >
+          Generate List
+        </Button>
       </Grid>
-      <Button
-        type="submit"
-        fullWidth
-        variant="contained"
-        color="primary"
-        className={classes.submit}
-        href="/loading"
-      >
-        Generate List
-      </Button>
     </Container>
   )
 }
