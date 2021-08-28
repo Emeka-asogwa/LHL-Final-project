@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from './config/axios';
+import { useHistory } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -52,11 +53,16 @@ export default function Register() {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  let history = useHistory();
 
   function handleSubmit(e) {
     e.preventDefault();
     const user = { firstName, lastName, email, password };
-    axios.post("/register", user);
+    axios.post("/register", user)
+    .then(res => {
+      console.log(res);
+      history.push("/");
+    });
   } 
 
   return (
