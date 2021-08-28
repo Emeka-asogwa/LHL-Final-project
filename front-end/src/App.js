@@ -17,7 +17,6 @@ export default function App() {
               <Link to="/about">About</Link>
             </li>
             <li>
-
               <Link to="/login"> Login</Link>
             </li>
             <li>
@@ -40,10 +39,10 @@ export default function App() {
           </Route>
           <Route path="/">
             <HomePage />
+          </Route>
 
           <Route path="/register">
             <Register />
-
           </Route>
         </Switch>
       </div>
