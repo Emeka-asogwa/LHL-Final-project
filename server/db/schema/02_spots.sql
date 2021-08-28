@@ -1,6 +1,6 @@
 -- Drop and recreate the date Spots table
 
-DROP TABLE IF EXISTS categories CASCADE;
+DROP TABLE IF EXISTS spots CASCADE;
 
 CREATE TABLE spots (
   id SERIAL PRIMARY KEY NOT NULL,
