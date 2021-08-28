@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SpotListItem(props) {
   const classes = useStyles();
-  const { title, description, location, url } = props;
+  const { title, description, location, url } = props.location.spot;
   
   return (
     <div className={classes.root}>
@@ -47,21 +47,21 @@ export default function SpotListItem(props) {
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
                 <Typography gutterBottom variant="subtitle1">
-                  Title
+                  {title}
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  A big super long description for a really great date spot that you'd love to go to yay.
+                  {description}
                 </Typography>
               </Grid>
               <Grid item>
-                <Link href="/" variant="body2">
-                  URL
+                <Link href={url} variant="body2">
+                  {url}
                 </Link>
               </Grid>
             </Grid>
             <Grid item>
               <Typography variant="subtitle1" color="textSecondary">
-                Location
+                {location}
               </Typography>
             </Grid>
           </Grid>
