@@ -4,13 +4,14 @@ const cors = require("cors");
 const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
-const cookieParser = require("cookie-parser");
+const cookieSession = require("cookie-session");
 const logger = require("morgan");
 
 // Routers
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const registerRouter = require("./routes/register");
+const loginRouter = require("./routes/login");
 const spotsRouter = require("./routes/spots");
 
 const app = express();
@@ -31,12 +32,18 @@ app.use(cors());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(
+  cookieSession({
+    name: "session",
+    keys: ["encryptdemcookies"],
+  })
+);
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter(db));
 app.use("/register", registerRouter(db));
+app.use("/login", loginRouter(db));
 app.use("/spots", spotsRouter(db));
 
 // Catch 404 and forward to error handler

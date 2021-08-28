@@ -22,8 +22,8 @@ module.exports = (db) => {
       [name, user.email, user.password]
     )
     .then((data) => {
-      // const newUser = data.rows[0];
-      // req.session.userId = newUser.id;
+      const newUser = data.rows[0];
+      req.session.userId = newUser.id;
       console.log("User created successfully")
       res.send("User created");
     })
