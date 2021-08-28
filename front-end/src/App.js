@@ -1,10 +1,8 @@
 import About from "./About";
-
 import Login from "./Login";
 import HomePage from "./HomePage";
-
 import Register from "./Register";
-
+import SpotListItem from "./SpotListItem";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 export default function App() {
@@ -14,14 +12,15 @@ export default function App() {
         <nav>
           <ul>
             <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
               <Link to="/about">About</Link>
             </li>
             <li>
-              <Link to="/login"> Login</Link>
+              <Link to="/login">Login</Link>
             </li>
             <li>
-              <Link to="/"> Home</Link>
-
               <Link to="/register">Register</Link>
             </li>
           </ul>
@@ -33,16 +32,17 @@ export default function App() {
           <Route path="/about">
             <About />
           </Route>
-
           <Route path="/login">
             <Login />
           </Route>
-          <Route path="/">
-            <HomePage />
-          </Route>
-
           <Route path="/register">
             <Register />
+          </Route>
+          <Route path="/spots/1">
+            <SpotListItem />
+          </Route>
+          <Route path="/">
+            <HomePage />
           </Route>
         </Switch>
       </div>
