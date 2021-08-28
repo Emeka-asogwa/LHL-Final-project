@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 500,
   },
   image: {
-    width: 512,
-    height: 512,
+    width: 470,
+    height: 470,
   },
   img: {
     margin: 'auto',
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SpotListItem(props) {
   const classes = useStyles();
-  const { title, description, location, url } = props.location.spot;
+  const { title, description, location, url, image_url } = props.location.spot;
   
   return (
     <div className={classes.root}>
@@ -40,7 +40,7 @@ export default function SpotListItem(props) {
         <Grid container spacing={2}>
           <Grid item>
             <ButtonBase className={classes.image}>
-              <img className={classes.img} alt="complex" src="/static/images/grid/complex.jpg" />
+              <img className={classes.img} alt={title} src={image_url} />
             </ButtonBase>
           </Grid>
           <Grid item xs={12} sm container>
