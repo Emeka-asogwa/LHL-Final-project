@@ -2,6 +2,7 @@ import About from "./About";
 import Login from "./Login";
 import HomePage from "./HomePage";
 import Register from "./Register";
+import SpotListItem from "./SpotListItem";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 export default function App() {
@@ -36,6 +37,9 @@ export default function App() {
           </Route>
           <Route path="/register">
             <Register />
+          </Route>
+          <Route path="/spots/1">
+            <SpotListItem />
           </Route>
           <Route path="/">
             <HomePage />
