@@ -8,6 +8,7 @@ CREATE TABLE spots (
   description TEXT,
   location VARCHAR(255) NOT NULL,
   url VARCHAR(255),
+  image_url VARCHAR(255),
   created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
   updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
 );
