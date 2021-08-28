@@ -1,11 +1,13 @@
+// Setup
 require('dotenv').config()
-const cors = require("cors"); // cors require
+const cors = require("cors");
 const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
+// Routers
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const registerRouter = require("./routes/register");
@@ -13,18 +15,19 @@ const spotsRouter = require("./routes/spots");
 
 const app = express();
 
-// view engine setup
+// View engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
 
-// PG database client/connection setup
+// PG database setup
 const { Pool } = require("pg");
 const dbParams = require("./lib/db.js");
 const db = new Pool(dbParams);
 db.on("connect", () => console.log("connnected to database 🥳"));
 db.connect();
 
-app.use(cors()); // CORS middleware useage
+// Use middlewares
+app.use(cors());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -36,18 +39,18 @@ app.use("/users", usersRouter(db));
 app.use("/register", registerRouter(db));
 app.use("/spots", spotsRouter(db));
 
-// catch 404 and forward to error handler
+// Catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
 });
 
-// error handler
+// Error handler
 app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
+  // Set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
-  // render the error page
+  // Render the error page
   res.status(err.status || 500);
   res.render("error");
 });
