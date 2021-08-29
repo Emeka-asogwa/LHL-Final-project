@@ -23,7 +23,7 @@ export default function Start() {
       <Typography component="h1" variant="h5">
         You currently have no date spots.
       </Typography>
-      <Link href="/spotsform" variant="body2">
+      <Link href="/generatelist" variant="body2">
         Click here to get started.
       </Link>
     </Container>

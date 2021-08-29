@@ -17,6 +17,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import FolderIcon from '@material-ui/icons/Folder';
 import Button from '@material-ui/core/Button';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,6 +40,15 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: "1.428571429",
     fontWeight: "400",
     display: "inline-flex"
+  },
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
   },
 }));
 
@@ -104,9 +115,20 @@ export default function MutualList(){
           <br />
           <FormControl maxWidth="xs">
             <Datetime
-              inputProps={{ placeholder: "Date time" }}
+              inputProps={{ placeholder: "Date & Time" }}
             />
           </FormControl>
+          <form className={classes.container} noValidate>
+            <TextField
+              id="datetime-local"
+              label="Date & Time"
+              type="datetime-local"
+              className={classes.textField}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </form>
         </Grid>
       </Grid>
       <Button
@@ -122,6 +144,12 @@ export default function MutualList(){
         color="secondary"
       >
         Pick a random date spot
+      </Button>
+      <Button
+        variant="outlined"
+        startIcon={<AddCircleIcon color="primary"/>}
+      >
+        Add more spots
       </Button>
     </div>
   );

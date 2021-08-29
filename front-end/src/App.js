@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import axios from './config/axios';
 import Loading from "./Loading";
 import MutualList from "./MutualList";
+import GenerateList from "./GenerateList";
 
 export default function App() {
 
@@ -44,7 +45,7 @@ export default function App() {
               <Link to="/start">Start</Link>
             </li>
             <li>
-              <Link to="/spotsform">Spots Form</Link>
+              <Link to="/generatelist">Generate List</Link>
             </li>
             <li>
               <Link to="/mutuallist">Mutual List</Link>
@@ -68,6 +69,9 @@ export default function App() {
           </Route>
           <Route path="/start">
             <Start />
+          </Route>
+          <Route path="/generatelist">
+            <GenerateList spots={spots}/>
           </Route>
           <Route path="/spotsform">
             <SpotsForm spots={spots}/>
