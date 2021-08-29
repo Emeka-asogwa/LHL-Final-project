@@ -21,7 +21,7 @@ export default function Start(props) {
   const history = useHistory();
   
   const [users, setUsers] = useState([]);
-  const [user, setUser] = useState("");
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     axios.get("/users").then(res => {
@@ -32,7 +32,7 @@ export default function Start(props) {
   }, []);
 
   useEffect(() => {
-    setUser(getName(history.location.state?.userId));
+    setUserName(getName(history.location.state?.userId));
   }, [users])
 
   function getName(id) {
@@ -45,7 +45,7 @@ export default function Start(props) {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Typography component="h1" variant="h5">
-        Welcome {user}!
+        Welcome {userName}!
       </Typography>
       <Typography component="h1" variant="h5">
         You currently have no date spots.
