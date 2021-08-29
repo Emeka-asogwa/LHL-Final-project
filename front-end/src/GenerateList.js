@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -12,6 +12,7 @@ import SpotCard from './SpotCard';
 import { Grid } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
 import { CircularProgress } from '@material-ui/core';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,6 +55,7 @@ export default function GenerateList(props) {
   const [location, setLocation] = useState('');
   const steps = getSteps();
   const [filteredSpots, setFilteredSpots] = useState(spots);
+  const history = useHistory();
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -69,8 +71,11 @@ export default function GenerateList(props) {
 
   function handleOnChange(e) {
     setLocation(e.target.value);
-    setFilteredSpots(spots.filter(spot => spot.location.toLowerCase().includes(location.toLowerCase())));
   }
+
+  useEffect(() => {
+    setFilteredSpots(spots.filter(spot => spot.location.toLowerCase().includes(location.toLowerCase())));
+  }, [location]);
 
   function getStepForm(index) {
     let form;
