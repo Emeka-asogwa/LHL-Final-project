@@ -16,6 +16,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import FolderIcon from '@material-ui/icons/Folder';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,7 +64,7 @@ export default function MutualList(){
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <Typography variant="h6" className={classes.title}>
-            You and your partner both want to visit:
+            You and your partner both chose:
           </Typography>
           <div className={classes.demo}>
           <List dense className={classes.root}>
@@ -108,7 +109,20 @@ export default function MutualList(){
           </FormControl>
         </Grid>
       </Grid>
-
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+      >
+        Chooose your date spot
+      </Button>
+      <Button
+        type="submit"
+        variant="contained"
+        color="secondary"
+      >
+        Pick a random date spot
+      </Button>
     </div>
   );
 }

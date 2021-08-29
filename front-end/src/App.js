@@ -46,6 +46,9 @@ export default function App() {
             <li>
               <Link to="/spotsform">Spots Form</Link>
             </li>
+            <li>
+              <Link to="/mutuallist">Mutual List</Link>
+            </li>
           </ul>
         </nav>
 
