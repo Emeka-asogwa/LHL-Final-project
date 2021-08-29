@@ -22,16 +22,6 @@ export default function App() {
     });
   }, []);
 
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    axios.get("/users").then(res => {
-      console.log("Response has comeback!");
-      console.log(res);
-      setUsers(res.data);
-    });
-  }, []);
-
   return (
     <Router>
       <div>
@@ -76,7 +66,7 @@ export default function App() {
           <Route path="/spots/detail" component={SpotListItem}>
           </Route>
           <Route path="/start">
-            <Start users={users}/>
+            <Start/>
           </Route>
           <Route path="/generatelist">
             <GenerateList spots={spots}/>
