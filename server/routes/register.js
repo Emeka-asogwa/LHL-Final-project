@@ -25,7 +25,7 @@ module.exports = (db) => {
       const newUser = data.rows[0];
       req.session.userId = newUser.id;
       console.log("User created successfully")
-      res.send("User created");
+      res.json({ userId: newUser.id});
     })
     .catch((e) => {
       res.status(500);
