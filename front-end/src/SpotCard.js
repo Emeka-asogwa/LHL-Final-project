@@ -31,7 +31,7 @@ export default function SpotCard(props) {
         <CardActionArea>
           <CardMedia
             className={classes.media}
-            image="/static/images/cards/contemplative-reptile.jpg"
+            image={spot.image_url}
             title="Contemplative Reptile"
           />
           <CardContent>

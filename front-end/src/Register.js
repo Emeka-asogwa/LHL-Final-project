@@ -61,7 +61,7 @@ export default function Register() {
     axios.post("/register", user)
     .then(res => {
       console.log(res);
-      history.push("/");
+      history.push("/start");
     });
   } 
 
