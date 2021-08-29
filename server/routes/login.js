@@ -11,7 +11,7 @@ module.exports = (db) => {
       if (!user) res.send("Error: Email not found.");
 
       if (user && bcrypt.compareSync(password, user.password)) {
-        res.send("User logged in");
+        res.json({ userId: user.id});
       } else {
         //invalid password
         res.send("Error: Incorrect password");
