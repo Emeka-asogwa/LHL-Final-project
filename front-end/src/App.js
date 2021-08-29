@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import axios from './config/axios';
 import Loading from "./Loading";
+import MutualList from "./MutualList";
 
 export default function App() {
 
@@ -70,6 +71,9 @@ export default function App() {
           </Route>
           <Route path="/loading">
             <Loading />
+          </Route>
+          <Route path="/mutuallist">
+            <MutualList />
           </Route>
           <Route path="/">
             <HomePage />
