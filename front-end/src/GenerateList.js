@@ -28,10 +28,17 @@ const useStyles = makeStyles((theme) => ({
   resetContainer: {
     padding: theme.spacing(3),
   },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
 function getSteps() {
-  return ["Provide your partner's email", 'Choose date spots in your area', 'Create a list of date spots'];
+  return ["Provide your partner's email", 'Choose date spots in your area', 'Add your own date spot', 'Create a list of date spots'];
 }
 
 function getStepContent(step) {
@@ -41,6 +48,8 @@ function getStepContent(step) {
     case 1:
       return 'Enter your location to find date spots near you. For each spot, you can click the green button to add it to your list, or the red button if you do not want it.';
     case 2:
+      return `Already got a place in mind? Enter the details of you own date spot below.`;
+    case 3:
       return `Now that you've picked your date spots, let's see which spots both you and your partner agree on!`;
     default:
       return 'Unknown step';
@@ -120,6 +129,71 @@ export default function GenerateList(props) {
             {filteredSpots.map(spot => (<SpotCard spot={spot} partner={partner} />))}
           </Grid>
         </Container>
+    } else if (index === 2) {
+      form = <form className={classes.form} noValidate>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                name="title"
+                variant="outlined"
+                required
+                fullWidth
+                id="title"
+                label="Title"
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="location"
+                label="Location"
+                name="location"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="description"
+                label="Description"
+                name="description"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="url"
+                label="URL"
+                name="url"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="image_url"
+                label="Image URL"
+                id="image_url"
+              />
+            </Grid>
+          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Submit
+          </Button>
+        </form>
     }
     return form;
   }
