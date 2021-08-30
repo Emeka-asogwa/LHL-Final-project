@@ -11,6 +11,8 @@ import { Link } from 'react-router-dom';
 import { Grid, IconButton } from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
+import { useHistory } from "react-router-dom";
+import axios from './config/axios';
 
 const useStyles = makeStyles({
   root: {
@@ -23,8 +25,18 @@ const useStyles = makeStyles({
 
 export default function SpotCard(props) {
   const classes = useStyles();
-  const { spot } = props;
+  const { spot, partner } = props;
+  const history = useHistory();
   
+  function handleClick(selected) {
+    console.log("clicked");
+    const user_spot = { partner, selected, user_id: history.location.state?.userId, spot_id: spot.id };
+    axios.post("/user_spots", user_spot)
+    .then(res => {
+      console.log(res);
+    });
+  }
+
   return (
     <Grid item xs={4} sm={6} md={4}>
       <Card className={classes.root}>
@@ -49,10 +61,10 @@ export default function SpotCard(props) {
               More Info
             </Button>
           </Link>
-          <IconButton>
+          <IconButton onClick={() => { handleClick(false) }}>
             <CancelIcon color="error" fontSize='medium'/>
           </IconButton>
-          <IconButton>
+          <IconButton onClick={() => { handleClick(true) }}>
             <CheckCircleIcon style={{ color: 'green' }} fontSize='medium'/>
           </IconButton>
         </CardActions>
