@@ -76,6 +76,7 @@ export default function SpotListItem(props) {
             variant="outlined"
             className={classes.button}
             startIcon={<CancelIcon color="error" fontSize='large'/>}
+            onClick={ ()=>history.goBack() }
           >
             Not Interested
         </Button>
@@ -83,6 +84,7 @@ export default function SpotListItem(props) {
             variant="outlined"
             className={classes.button}
             startIcon={<CheckCircleIcon style={{ color: 'green' }} fontSize='large'/>}
+            onClick={ ()=>history.goBack() }
           >
             Add to my list
         </Button>

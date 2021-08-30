@@ -50,9 +50,9 @@ function getStepContent(step) {
 export default function GenerateList(props) {
   const classes = useStyles();
   const { spots } = props;
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(localStorage.getItem('activeStep') || 0);
   const [partner, setPartner] = useState('');
-  const [location, setLocation] = useState('');
+  const [location, setLocation] = useState(localStorage.getItem('location') || '');
   const steps = getSteps();
   const [filteredSpots, setFilteredSpots] = useState(spots);
   const history = useHistory();
@@ -80,13 +80,16 @@ export default function GenerateList(props) {
   }
 
   useEffect(() => {
-    setFilteredSpots(spots.filter(spot => spot.location.toLowerCase().includes(location.toLowerCase())));
-  }, [location]);
+    const step = localStorage.getItem('activeStep');
+    const input = localStorage.getItem('location');
+    (step) ? setActiveStep(parseInt(step)) : setActiveStep(0);
+    (input) ? setLocation(input) : setLocation('');
+  }, []);
 
   useEffect(() => {
-    const step = localStorage.getItem('activeStep');
-    (step) ? setActiveStep(parseInt(step)) : setActiveStep(0);
-  }, []);
+    setFilteredSpots(spots.filter(spot => spot.location.toLowerCase().includes(location.toLowerCase())));
+    localStorage.setItem('location', location);
+  }, [location]);
   
   useEffect(() => {
     localStorage.setItem('activeStep', activeStep.toString());
