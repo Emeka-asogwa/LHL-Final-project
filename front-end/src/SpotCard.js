@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -27,6 +27,7 @@ export default function SpotCard(props) {
   const classes = useStyles();
   const { spot, partner } = props;
   const history = useHistory();
+  const [show, setShow] = useState(true);
   
   function handleClick(selected) {
     console.log("clicked");
@@ -34,41 +35,44 @@ export default function SpotCard(props) {
     axios.post("/user_spots", user_spot)
     .then(res => {
       console.log(res);
+      setShow(prev => !prev)
     });
   }
 
   return (
-    <Grid item xs={4} sm={6} md={4}>
-      <Card className={classes.root}>
-        <CardActionArea>
-          <CardMedia
-            className={classes.media}
-            image={spot.image_url}
-            title="Contemplative Reptile"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              {spot.title}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {spot.description}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
-          <Link to={{pathname: `/spots/detail`, spot}} style={{ textDecoration: 'none' }}>
-            <Button size="small" color="primary">
-              More Info
-            </Button>
-          </Link>
-          <IconButton onClick={() => { handleClick(false) }}>
-            <CancelIcon color="error" fontSize='medium'/>
-          </IconButton>
-          <IconButton onClick={() => { handleClick(true) }}>
-            <CheckCircleIcon style={{ color: 'green' }} fontSize='medium'/>
-          </IconButton>
-        </CardActions>
-      </Card>
-    </Grid>
+    <>
+      {show && <Grid item xs={4} sm={6} md={4}>
+        <Card className={classes.root}>
+          <CardActionArea>
+            <CardMedia
+              className={classes.media}
+              image={spot.image_url}
+              title="Contemplative Reptile"
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+                {spot.title}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                {spot.description}
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+          <CardActions>
+            <Link to={{pathname: `/spots/detail`, spot}} style={{ textDecoration: 'none' }}>
+              <Button size="small" color="primary">
+                More Info
+              </Button>
+            </Link>
+            <IconButton onClick={() => { handleClick(false) }}>
+              <CancelIcon color="error" fontSize='medium'/>
+            </IconButton>
+            <IconButton onClick={() => { handleClick(true) }}>
+              <CheckCircleIcon style={{ color: 'green' }} fontSize='medium'/>
+            </IconButton>
+          </CardActions>
+        </Card>
+      </Grid>}
+    </>
   );
 }
