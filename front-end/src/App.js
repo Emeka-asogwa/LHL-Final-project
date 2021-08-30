@@ -1,4 +1,5 @@
 import About from "./About";
+import Navbar from "./Navbar";
 
 import Login from "./Login";
 import HomePage from "./HomePage";
@@ -17,7 +18,6 @@ export default function App() {
               <Link to="/about">About</Link>
             </li>
             <li>
-
               <Link to="/login"> Login</Link>
             </li>
             <li>
@@ -32,18 +32,26 @@ export default function App() {
             renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/about">
-            <About />
+            <Navbar>
+              <About />
+            </Navbar>
           </Route>
 
           <Route path="/login">
-            <Login />
+            <Navbar>
+              <Login />
+            </Navbar>
           </Route>
           <Route path="/">
-            <HomePage />
+            <Navbar>
+              <HomePage />
+            </Navbar>
+          </Route>
 
           <Route path="/register">
-            <Register />
-
+            <Navbar>
+              <Register />
+            </Navbar>
           </Route>
         </Switch>
       </div>
