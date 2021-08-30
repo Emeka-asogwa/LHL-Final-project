@@ -50,7 +50,7 @@ function getStepContent(step) {
 export default function GenerateList(props) {
   const classes = useStyles();
   const { spots } = props;
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState(0);
   const [partner, setPartner] = useState('');
   const [location, setLocation] = useState('');
   const steps = getSteps();
@@ -76,11 +76,21 @@ export default function GenerateList(props) {
 
   function loadingList() {
     setTimeout(() => history.push("/mutuallist"), 3000);
+    setTimeout(() => localStorage.clear(), 3000);
   }
 
   useEffect(() => {
     setFilteredSpots(spots.filter(spot => spot.location.toLowerCase().includes(location.toLowerCase())));
   }, [location]);
+
+  useEffect(() => {
+    const step = localStorage.getItem('activeStep');
+    (step) ? setActiveStep(parseInt(step)) : setActiveStep(0);
+  }, []);
+  
+  useEffect(() => {
+    localStorage.setItem('activeStep', activeStep.toString());
+  }, [activeStep]);
 
   function getStepForm(index) {
     let form;
