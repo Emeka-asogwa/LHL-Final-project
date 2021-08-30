@@ -56,6 +56,7 @@ export default function GenerateList(props) {
   const steps = getSteps();
   const [filteredSpots, setFilteredSpots] = useState(spots);
   const history = useHistory();
+  const userId = history.location.state?.userId;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -71,6 +72,10 @@ export default function GenerateList(props) {
 
   function handleOnChange(e) {
     setLocation(e.target.value);
+  }
+
+  function loadingList() {
+    setTimeout(() => history.push("/mutuallist"), 3000);
   }
 
   useEffect(() => {
@@ -99,7 +104,7 @@ export default function GenerateList(props) {
             onChange={e => handleOnChange(e)}
           />
           <Grid container spacing={2} alignItems={'center'} justifyContent={'space-evenly'}>
-            {filteredSpots.map(spot => (<SpotCard spot={spot} />))}
+            {filteredSpots.map(spot => (<SpotCard spot={spot} partner={partner} />))}
           </Grid>
         </Container>
     }
@@ -145,6 +150,7 @@ export default function GenerateList(props) {
               Generating your list ...
             </Typography>
             <CircularProgress />
+            {loadingList()}
           </Container>
         </Paper>
       )}
