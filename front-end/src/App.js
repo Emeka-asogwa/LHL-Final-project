@@ -6,8 +6,8 @@ import Register from "./Register";
 import SpotListItem from "./SpotListItem";
 import Start from "./Start";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { useEffect, useState } from 'react';
-import axios from './config/axios';
+import { useEffect, useState } from "react";
+import axios from "./config/axios";
 import MutualList from "./MutualList";
 import GenerateList from "./GenerateList";
 
@@ -25,6 +25,46 @@ export default function App() {
   return (
     <Router>
       <div>
+        {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+        <Switch>
+          <Route path="/about">
+            <Navbar>
+              <About />
+            </Navbar>
+          </Route>
+          <Route path="/login">
+            <Navbar>
+              <Login />
+            </Navbar>
+          </Route>
+
+          <Route path="/register">
+            <Navbar>
+              <Register />
+            </Navbar>
+          </Route>
+
+          <Route path="/spots/detail" component={SpotListItem}></Route>
+          <Route path="/start">
+            <Navbar>
+              <Start />
+            </Navbar>
+          </Route>
+          <Route path="/generatelist">
+            <Navbar>
+              <GenerateList spots={spots} />
+            </Navbar>
+          </Route>
+          <Route path="/mutuallist">
+            <MutualList spots={spots} />
+          </Route>
+          <Route path="/">
+            <Navbar>
+              <HomePage />
+            </Navbar>
+          </Route>
+        </Switch>
         <nav>
           <ul>
             <li>
@@ -50,42 +90,6 @@ export default function App() {
             </li>
           </ul>
         </nav>
-
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
-        <Switch>
-          <Route path="/about">
-            <Navbar>
-              <About />
-            </Navbar>
-          </Route>
-          <Route path="/login">
-            <Navbar>
-              <Login />
-            </Navbar>
-          </Route>
-
-          <Route path="/register">
-            <Navbar>
-              <Register />
-            </Navbar>
-          </Route>
-          <Route path="/spots/detail" component={SpotListItem}></Route>
-          <Route path="/start">
-            <Start/>
-          </Route>
-          <Route path="/generatelist">
-            <GenerateList spots={spots} />
-          </Route>
-          <Route path="/mutuallist">
-            <MutualList spots={spots}/>
-          </Route>
-          <Route path="/">
-            <Navbar>
-              <HomePage />
-            </Navbar>
-          </Route>
-        </Switch>
       </div>
     </Router>
   );

@@ -165,7 +165,6 @@ export default function Navbar(props) {
         </AppBar>
         {props.children}
       </React.StrictMode>
-      , document.getElementById('root')
     </div>
   );
 }
