@@ -1,7 +1,7 @@
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import { Link } from '@material-ui/core';
+import { Link } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from 'react';
@@ -50,7 +50,7 @@ export default function Start(props) {
       <Typography component="h1" variant="h5">
         You currently have no date spots.
       </Typography>
-      <Link href="/generatelist" variant="body2">
+      <Link to={{pathname:"/generatelist", state: { userId: history.location.state?.userId}}} variant="body2">
         Click here to get started.
       </Link>
     </Container>
