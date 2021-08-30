@@ -89,7 +89,7 @@ export default function MutualList(props){
   return (
     <div className={classes.root}>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
+        <Grid item>
           <Typography variant="h6" className={classes.title}>
             You and your partner both chose:
           </Typography>
