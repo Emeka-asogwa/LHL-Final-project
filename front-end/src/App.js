@@ -79,6 +79,12 @@ export default function App() {
               <Register />
             </Navbar>
           </Route>
+
+          <Route path="/register">
+            <Navbar>
+              <Register />
+            </Navbar>
+          </Route>
           <Route path="/spots/detail" component={SpotListItem}></Route>
           <Route path="/start">
             <Start />
