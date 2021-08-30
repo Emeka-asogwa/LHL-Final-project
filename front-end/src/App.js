@@ -72,7 +72,7 @@ export default function App() {
             <GenerateList spots={spots}/>
           </Route>
           <Route path="/mutuallist">
-            <MutualList />
+            <MutualList spots={spots}/>
           </Route>
           <Route path="/">
             <HomePage />

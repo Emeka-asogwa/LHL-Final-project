@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 // react component plugin for creating a beautiful datetime dropdown picker
 import Datetime from "react-datetime";
 import "./datetime.css"
@@ -19,6 +19,7 @@ import FolderIcon from '@material-ui/icons/Folder';
 import Button from '@material-ui/core/Button';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import TextField from '@material-ui/core/TextField';
+import axios from './config/axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,10 +53,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MutualList(){
+export default function MutualList(props){
   const classes = useStyles();
   const [secondary, setSecondary] = React.useState(true);
   const [checked, setChecked] = React.useState([1]);
+  const { spots } = props;
+  const [mutualSpots, setMutualSpots] = useState([]);
+
+  useEffect(() => {
+    axios.get("/user_spots/mutual").then(res => {
+      console.log("Response has comeback!");
+      console.log(res);
+      setMutualSpots(res.data);
+    });
+  }, []);
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -69,6 +80,11 @@ export default function MutualList(){
 
     setChecked(newChecked);
   };
+
+  function getMutualSpots(){
+    console.log(mutualSpots.map(spot => spots.filter(s => s.id === spot.spot_id)[0]));
+    return mutualSpots.map(spot => spots.filter(s => s.id === spot.spot_id)[0]);
+  }
   
   return (
     <div className={classes.root}>
@@ -78,21 +94,21 @@ export default function MutualList(){
             You and your partner both chose:
           </Typography>
           <div className={classes.demo}>
-          <List dense className={classes.root}>
-            {[0, 1, 2, 3].map((value) => {
-              const labelId = `checkbox-list-secondary-label-${value}`;
+          <List className={classes.root}>
+            {getMutualSpots().map((value) => {
+              const labelId = `checkbox-list-secondary-label-${value.id}`;
               return (
-                <ListItem key={value} button>
+                <ListItem key={value.id} button>
                   <ListItemAvatar>
                     <Avatar
-                      alt={"placeholder-image"}
-                      src={"https://source.unsplash.com/random"}
+                      alt={value.title}
+                      src={value.image_url}
                     />
                   </ListItemAvatar>
                   <ListItemText 
                     id={labelId}
-                    primary={`Line item ${value + 1}`} 
-                    secondary={secondary ? 'Secondary text' : null}
+                    primary={value.title} 
+                    secondary={secondary ? value.description : null}
                   />
                   <ListItemSecondaryAction>
                     <Checkbox
@@ -108,7 +124,7 @@ export default function MutualList(){
           </List>
           </div>
         </Grid>
-        <Grid item xs={12} md={6}>
+        {/* <Grid item xs={12} md={6}>
           <InputLabel className={classes.label}>
             Choose a date and time for your date night:
           </InputLabel>
@@ -129,8 +145,15 @@ export default function MutualList(){
               }}
             />
           </form>
-        </Grid>
+        </Grid> */}
       </Grid>
+      <Button
+        variant="outlined"
+        startIcon={<AddCircleIcon color="primary"/>}
+        href="/generatelist"
+      >
+        Add more spots
+      </Button>
       <Button
         type="submit"
         variant="contained"
@@ -144,12 +167,6 @@ export default function MutualList(){
         color="secondary"
       >
         Pick a random date spot
-      </Button>
-      <Button
-        variant="outlined"
-        startIcon={<AddCircleIcon color="primary"/>}
-      >
-        Add more spots
       </Button>
     </div>
   );
