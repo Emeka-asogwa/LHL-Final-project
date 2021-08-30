@@ -7,7 +7,8 @@ import Link from '@material-ui/core/Link';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
-import IconButton from '@material-ui/core/IconButton';
+import { Button } from '@material-ui/core';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 500,
   },
   image: {
-    width: 512,
-    height: 512,
+    width: 470,
+    height: 470,
   },
   img: {
     margin: 'auto',
@@ -28,11 +29,16 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '100%',
     maxHeight: '100%',
   },
+  button: {
+    margin: theme.spacing(5),
+    marginRight: theme.spacing(0),
+  },
 }));
 
 export default function SpotListItem(props) {
   const classes = useStyles();
-  const { title, description, location, url } = props;
+  const { title, description, location, url, image_url } = props.location.spot;
+  const history = useHistory();
   
   return (
     <div className={classes.root}>
@@ -40,38 +46,54 @@ export default function SpotListItem(props) {
         <Grid container spacing={2}>
           <Grid item>
             <ButtonBase className={classes.image}>
-              <img className={classes.img} alt="complex" src="/static/images/grid/complex.jpg" />
+              <img className={classes.img} alt={title} src={image_url} />
             </ButtonBase>
           </Grid>
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
                 <Typography gutterBottom variant="subtitle1">
-                  Title
+                  {title}
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  A big super long description for a really great date spot that you'd love to go to yay.
+                  {description}
                 </Typography>
               </Grid>
               <Grid item>
-                <Link href="/" variant="body2">
-                  URL
+                <Link href={url} variant="body2">
+                  {url}
                 </Link>
               </Grid>
             </Grid>
             <Grid item>
               <Typography variant="subtitle1" color="textSecondary">
-                Location
+                {location}
               </Typography>
             </Grid>
           </Grid>
         </Grid>
-        <IconButton>
-          <CancelIcon color="error" fontSize='large'/>
-        </IconButton>
-        <IconButton>
-          <CheckCircleIcon style={{ color: 'green' }} fontSize='large'/>
-        </IconButton>
+        <Button
+            variant="outlined"
+            className={classes.button}
+            startIcon={<CancelIcon color="error" fontSize='large'/>}
+          >
+            Not Interested
+        </Button>
+        <Button
+            variant="outlined"
+            className={classes.button}
+            startIcon={<CheckCircleIcon style={{ color: 'green' }} fontSize='large'/>}
+          >
+            Add to my list
+        </Button>
+        <Button
+          fullWidth
+          variant="contained"
+          color="primary"
+          onClick={ ()=>history.goBack() }
+        >
+          Back
+        </Button>
       </Paper>
     </div>
   );

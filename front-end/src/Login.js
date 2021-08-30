@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from 'react';
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,6 +12,8 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import axios from './config/axios';
+import { useHistory } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -31,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
   },
   image: {
-    backgroundImage: "url(https://source.unsplash.com/random)",
+    backgroundImage: "url(https://source.unsplash.com/featured/?date-night)",
     backgroundRepeat: "no-repeat",
     backgroundColor:
       theme.palette.type === "light"
@@ -61,6 +63,20 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
   const classes = useStyles();
+  // create state variables for each input
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  let history = useHistory();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const user = { email, password };
+    axios.post("/login", user)
+    .then(res => {
+      console.log(res);
+      history.push("/start");
+    });
+  } 
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -72,9 +88,9 @@ export default function Login() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Login
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate onSubmit={(e) => { handleSubmit(e) }}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -85,6 +101,8 @@ export default function Login() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={email}
+              onChange={e => setEmail(e.target.value)}
             />
             <TextField
               variant="outlined"
@@ -96,6 +114,8 @@ export default function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -108,7 +128,7 @@ export default function Login() {
               color="primary"
               className={classes.submit}
             >
-              Sign In
+              Login
             </Button>
             <Grid container>
               <Grid item xs>
@@ -118,7 +138,7 @@ export default function Login() {
               </Grid>
               <Grid item>
                 <Link href="/register" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                  {"Don't have an account? Register"}
                 </Link>
               </Grid>
             </Grid>
