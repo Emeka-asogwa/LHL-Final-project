@@ -5,12 +5,13 @@ const bcrypt = require("bcrypt");
 module.exports = (db) => {
   router.post("/", (req, res) => {
     const user = req.body;
+    const name = `${user.firstName} ${user.lastName}`;
   
-    // // If inputs blank, error
+    // If inputs blank, error
     // Hash password
     user.password = bcrypt.hashSync(user.password, 12);
-    const name = `${user.firstName} ${user.lastName}`;
-    // // If email already registered, error
+
+    // If email already registered, error
     // Else store new user in database: register query
     db.query(
       `
@@ -21,8 +22,8 @@ module.exports = (db) => {
       [name, user.email, user.password]
     )
     .then((data) => {
-      // const newUser = data.rows[0];
-      // req.session.userId = newUser.id;
+      const newUser = data.rows[0];
+      req.session.userId = newUser.id;
       console.log("User created successfully")
       res.send("User created");
     })
@@ -38,6 +39,3 @@ module.exports = (db) => {
 
   return router;
 };
-
-
-// module.exports = router;
