@@ -13,6 +13,7 @@ import { Grid } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
 import { CircularProgress } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
+import axios from './config/axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,6 +68,12 @@ export default function GenerateList(props) {
   const history = useHistory();
   const userId = history.location.state?.userId;
 
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [spotLocation, setSpotLocation] = useState('');
+  const [url, setUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -104,6 +111,15 @@ export default function GenerateList(props) {
     localStorage.setItem('activeStep', activeStep.toString());
   }, [activeStep]);
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    const newSpot = { title, description, spotLocation, url, imageUrl };
+    axios.post("/spots", newSpot)
+    .then(res => {
+      console.log(res);
+    });
+  } 
+
   function getStepForm(index) {
     let form;
     if (index === 0) {
@@ -130,7 +146,7 @@ export default function GenerateList(props) {
           </Grid>
         </Container>
     } else if (index === 2) {
-      form = <form className={classes.form} noValidate>
+      form = <form className={classes.form} noValidate onSubmit={(e) => { handleSubmit(e) }}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -141,6 +157,8 @@ export default function GenerateList(props) {
                 id="title"
                 label="Title"
                 autoFocus
+                value={title}
+                onChange={e => setTitle(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -151,6 +169,8 @@ export default function GenerateList(props) {
                 id="location"
                 label="Location"
                 name="location"
+                value={spotLocation}
+                onChange={e => setSpotLocation(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -160,7 +180,10 @@ export default function GenerateList(props) {
                 fullWidth
                 id="description"
                 label="Description"
+                multiline
                 name="description"
+                value={description}
+                onChange={e => setDescription(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -171,6 +194,8 @@ export default function GenerateList(props) {
                 id="url"
                 label="URL"
                 name="url"
+                value={url}
+                onChange={e => setUrl(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -181,6 +206,8 @@ export default function GenerateList(props) {
                 name="image_url"
                 label="Image URL"
                 id="image_url"
+                value={imageUrl}
+                onChange={e => setImageUrl(e.target.value)}
               />
             </Grid>
           </Grid>

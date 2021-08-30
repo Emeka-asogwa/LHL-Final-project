@@ -17,6 +17,24 @@ module.exports = (db) => {
     })
   });
 
+  router.post('/', (req, res) => {
+    const { title, description, spotLocation, url, imageUrl } = req.body;
+    console.log(req.body);
+    db.query(
+      `
+      INSERT INTO spots(title, description, location, url, image_url)
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING *;
+      `,
+      [title, description, spotLocation, url, imageUrl]
+    )
+    .then((data) => {
+      console.log("Spot created successfully")
+      res.sendStatus(200);
+    })
+    .catch(e => console.log(e));
+  });
+
   return router;
 };
 
