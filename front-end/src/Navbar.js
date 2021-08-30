@@ -18,6 +18,8 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -149,6 +151,9 @@ export default function Navbar(props) {
               >
                 <AccountCircle />
               </IconButton>
+              <ButtonGroup disableElevation variant="contained" color="primary">
+                <Button>Logout</Button>
+              </ButtonGroup>
             </div>
             <div className={classes.sectionMobile}>
               <IconButton
