@@ -7,18 +7,17 @@ import SpotListItem from "./SpotListItem";
 import Start from "./Start";
 import SpotsForm from "./SpotsForm";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { useEffect, useState } from 'react';
-import axios from './config/axios';
+import { useEffect, useState } from "react";
+import axios from "./config/axios";
 import Loading from "./Loading";
 import MutualList from "./MutualList";
 import GenerateList from "./GenerateList";
 
 export default function App() {
-
   const [spots, setSpots] = useState([]);
 
   useEffect(() => {
-    axios.get("/spots").then(res => {
+    axios.get("/spots").then((res) => {
       console.log("Response has comeback!");
       console.log(res);
       setSpots(res.data);
@@ -31,15 +30,9 @@ export default function App() {
         <nav>
           <ul>
             <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
               <Link to="/about">About</Link>
             </li>
             <li>
-
-              <Link to="/login"> Login</Link>
-
               <Link to="/login">Login</Link>
             </li>
             <li>
@@ -53,6 +46,9 @@ export default function App() {
             </li>
             <li>
               <Link to="/mutuallist">Mutual List</Link>
+            </li>
+            <li>
+              <Link to="/">Home</Link>
             </li>
           </ul>
         </nav>
@@ -70,28 +66,21 @@ export default function App() {
               <Login />
             </Navbar>
           </Route>
-          <Route path="/">
-            <Navbar>
-              <HomePage />
-            </Navbar>
-          </Route>
 
           <Route path="/register">
             <Navbar>
               <Register />
             </Navbar>
-          
           </Route>
-          <Route path="/spots/detail" component={SpotListItem}>
-          </Route>
+          <Route path="/spots/detail" component={SpotListItem}></Route>
           <Route path="/start">
             <Start />
           </Route>
           <Route path="/generatelist">
-            <GenerateList spots={spots}/>
+            <GenerateList spots={spots} />
           </Route>
           <Route path="/spotsform">
-            <SpotsForm spots={spots}/>
+            <SpotsForm spots={spots} />
           </Route>
           <Route path="/loading">
             <Loading />
@@ -100,7 +89,9 @@ export default function App() {
             <MutualList />
           </Route>
           <Route path="/">
-            <HomePage />
+            <Navbar>
+              <HomePage />
+            </Navbar>
           </Route>
         </Switch>
       </div>
