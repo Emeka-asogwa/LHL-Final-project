@@ -1,4 +1,5 @@
 import About from "./About";
+import Navbar from "./Navbar";
 import Login from "./Login";
 import HomePage from "./HomePage";
 import Register from "./Register";
@@ -11,11 +12,10 @@ import MutualList from "./MutualList";
 import GenerateList from "./GenerateList";
 
 export default function App() {
-
   const [spots, setSpots] = useState([]);
 
   useEffect(() => {
-    axios.get("/spots").then(res => {
+    axios.get("/spots").then((res) => {
       console.log("Response has comeback!");
       console.log(res);
       setSpots(res.data);
@@ -27,9 +27,6 @@ export default function App() {
       <div>
         <nav>
           <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
             <li>
               <Link to="/about">About</Link>
             </li>
@@ -48,6 +45,9 @@ export default function App() {
             <li>
               <Link to="/mutuallist">Mutual List</Link>
             </li>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
           </ul>
         </nav>
 
@@ -55,27 +55,35 @@ export default function App() {
             renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/about">
-            <About />
+            <Navbar>
+              <About />
+            </Navbar>
           </Route>
           <Route path="/login">
-            <Login />
+            <Navbar>
+              <Login />
+            </Navbar>
           </Route>
+
           <Route path="/register">
-            <Register />
+            <Navbar>
+              <Register />
+            </Navbar>
           </Route>
-          <Route path="/spots/detail" component={SpotListItem}>
-          </Route>
+          <Route path="/spots/detail" component={SpotListItem}></Route>
           <Route path="/start">
             <Start/>
           </Route>
           <Route path="/generatelist">
-            <GenerateList spots={spots}/>
+            <GenerateList spots={spots} />
           </Route>
           <Route path="/mutuallist">
             <MutualList spots={spots}/>
           </Route>
           <Route path="/">
-            <HomePage />
+            <Navbar>
+              <HomePage />
+            </Navbar>
           </Route>
         </Switch>
       </div>
