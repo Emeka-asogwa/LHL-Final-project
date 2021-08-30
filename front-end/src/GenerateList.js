@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -12,6 +12,7 @@ import SpotCard from './SpotCard';
 import { Grid } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
 import { CircularProgress } from '@material-ui/core';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,11 +50,13 @@ function getStepContent(step) {
 export default function GenerateList(props) {
   const classes = useStyles();
   const { spots } = props;
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState(0);
   const [partner, setPartner] = useState('');
   const [location, setLocation] = useState('');
   const steps = getSteps();
   const [filteredSpots, setFilteredSpots] = useState(spots);
+  const history = useHistory();
+  const userId = history.location.state?.userId;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -69,8 +72,25 @@ export default function GenerateList(props) {
 
   function handleOnChange(e) {
     setLocation(e.target.value);
-    setFilteredSpots(spots.filter(spot => spot.location.toLowerCase().includes(location.toLowerCase())));
   }
+
+  function loadingList() {
+    setTimeout(() => history.push("/mutuallist"), 3000);
+    setTimeout(() => localStorage.clear(), 3000);
+  }
+
+  useEffect(() => {
+    setFilteredSpots(spots.filter(spot => spot.location.toLowerCase().includes(location.toLowerCase())));
+  }, [location]);
+
+  useEffect(() => {
+    const step = localStorage.getItem('activeStep');
+    (step) ? setActiveStep(parseInt(step)) : setActiveStep(0);
+  }, []);
+  
+  useEffect(() => {
+    localStorage.setItem('activeStep', activeStep.toString());
+  }, [activeStep]);
 
   function getStepForm(index) {
     let form;
@@ -94,7 +114,7 @@ export default function GenerateList(props) {
             onChange={e => handleOnChange(e)}
           />
           <Grid container spacing={2} alignItems={'center'} justifyContent={'space-evenly'}>
-            {filteredSpots.map(spot => (<SpotCard spot={spot} />))}
+            {filteredSpots.map(spot => (<SpotCard spot={spot} partner={partner} />))}
           </Grid>
         </Container>
     }
@@ -140,6 +160,7 @@ export default function GenerateList(props) {
               Generating your list ...
             </Typography>
             <CircularProgress />
+            {loadingList()}
           </Container>
         </Paper>
       )}

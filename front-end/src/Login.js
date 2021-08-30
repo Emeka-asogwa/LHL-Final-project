@@ -73,8 +73,7 @@ export default function Login() {
     const user = { email, password };
     axios.post("/login", user)
     .then(res => {
-      console.log(res);
-      history.push("/start");
+      history.push("/start", { userId: res.data.userId });
     });
   } 
 

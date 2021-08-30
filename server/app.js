@@ -13,6 +13,7 @@ const usersRouter = require("./routes/users");
 const registerRouter = require("./routes/register");
 const loginRouter = require("./routes/login");
 const spotsRouter = require("./routes/spots");
+const userSpotsRouter = require("./routes/user_spots");
 
 const app = express();
 
@@ -45,6 +46,7 @@ app.use("/users", usersRouter(db));
 app.use("/register", registerRouter(db));
 app.use("/login", loginRouter(db));
 app.use("/spots", spotsRouter(db));
+app.use("/user_spots", userSpotsRouter(db));
 
 // Catch 404 and forward to error handler
 app.use(function (req, res, next) {

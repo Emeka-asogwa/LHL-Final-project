@@ -5,11 +5,9 @@ import HomePage from "./HomePage";
 import Register from "./Register";
 import SpotListItem from "./SpotListItem";
 import Start from "./Start";
-import SpotsForm from "./SpotsForm";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios from "./config/axios";
-import Loading from "./Loading";
+import { useEffect, useState } from 'react';
+import axios from './config/axios';
 import MutualList from "./MutualList";
 import GenerateList from "./GenerateList";
 
@@ -74,19 +72,13 @@ export default function App() {
           </Route>
           <Route path="/spots/detail" component={SpotListItem}></Route>
           <Route path="/start">
-            <Start />
+            <Start/>
           </Route>
           <Route path="/generatelist">
             <GenerateList spots={spots} />
           </Route>
-          <Route path="/spotsform">
-            <SpotsForm spots={spots} />
-          </Route>
-          <Route path="/loading">
-            <Loading />
-          </Route>
           <Route path="/mutuallist">
-            <MutualList />
+            <MutualList spots={spots}/>
           </Route>
           <Route path="/">
             <Navbar>
