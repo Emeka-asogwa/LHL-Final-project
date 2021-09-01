@@ -87,7 +87,6 @@ export default function Navbar(props) {
   };
 
   const logOut = () => {
-    history.push("/");
     localStorage.clear();
   };
 
@@ -135,7 +134,7 @@ export default function Navbar(props) {
                 color="primary"
                 style={{ textTransform: "none" }}
               >
-                <Button onClick={logOut}>Logout</Button>
+                <Button href="/" onClick={logOut}>Logout</Button>
               </ButtonGroup>
             </div>}
           </Toolbar>
