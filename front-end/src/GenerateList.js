@@ -67,6 +67,15 @@ export default function GenerateList(props) {
   const [filteredSpots, setFilteredSpots] = useState(spots);
   const history = useHistory();
   const userId = history.location.state?.userId;
+  const [skipped, setSkipped] = useState(new Set());
+
+  const isStepOptional = (step) => {
+    return step === 2;
+  };
+
+  const isStepSkipped = (step) => {
+    return skipped.has(step);
+  };
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -75,7 +84,29 @@ export default function GenerateList(props) {
   const [imageUrl, setImageUrl] = useState('');
 
   const handleNext = () => {
+    let newSkipped = skipped;
+    if (isStepSkipped(activeStep)) {
+      newSkipped = new Set(newSkipped.values());
+      newSkipped.delete(activeStep);
+    }
+
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setSkipped(newSkipped);
+  };
+
+  const handleSkip = () => {
+    if (!isStepOptional(activeStep)) {
+      // You probably want to guard against something like this,
+      // it should never occur unless someone's actively trying to break something.
+      throw new Error("You can't skip a step that isn't optional.");
+    }
+
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setSkipped((prevSkipped) => {
+      const newSkipped = new Set(prevSkipped.values());
+      newSkipped.add(activeStep);
+      return newSkipped;
+    });
   };
 
   const handleBack = () => {
@@ -148,7 +179,7 @@ export default function GenerateList(props) {
     } else if (index === 2) {
       form = <form className={classes.form} noValidate onSubmit={(e) => { handleSubmit(e) }}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={4}>
               <TextField
                 name="title"
                 variant="outlined"
@@ -161,7 +192,7 @@ export default function GenerateList(props) {
                 onChange={e => setTitle(e.target.value)}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={4}>
               <TextField
                 variant="outlined"
                 required
@@ -173,7 +204,7 @@ export default function GenerateList(props) {
                 onChange={e => setSpotLocation(e.target.value)}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={8}>
               <TextField
                 variant="outlined"
                 required
@@ -186,7 +217,8 @@ export default function GenerateList(props) {
                 onChange={e => setDescription(e.target.value)}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={4}></Grid>
+            <Grid item xs={12} sm={4}>
               <TextField
                 variant="outlined"
                 required
@@ -198,7 +230,7 @@ export default function GenerateList(props) {
                 onChange={e => setUrl(e.target.value)}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={4}>
               <TextField
                 variant="outlined"
                 required
@@ -211,15 +243,17 @@ export default function GenerateList(props) {
               />
             </Grid>
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Submit
-          </Button>
+          <Grid item xs={12} sm={8}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Submit
+            </Button>
+          </Grid>
         </form>
     }
     return form;
@@ -228,42 +262,63 @@ export default function GenerateList(props) {
   return (
     <div className={classes.root}>
       <Stepper activeStep={activeStep} orientation="vertical">
-        {steps.map((label, index) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-            <StepContent>
-              <Typography>{getStepContent(index)}</Typography>
-              {getStepForm(index)}
-              <div className={classes.actionsContainer}>
-                <div>
-                  <Button
-                    disabled={activeStep === 0}
-                    onClick={handleBack}
-                    className={classes.button}
-                  >
-                    Back
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.button}
-                  >
-                    {activeStep === steps.length - 1 ? 'Generate List' : 'Next'}
-                  </Button>
+        {steps.map((label, index) => {
+          const stepProps = {};
+          const labelProps = {};
+          if (isStepOptional(index)) {
+            labelProps.optional = <Typography variant="caption">Optional</Typography>;
+          }
+          if (isStepSkipped(index)) {
+            stepProps.completed = false;
+          }
+        
+          return (
+            <Step key={label} {...stepProps}>
+              <StepLabel {...labelProps}>{label}</StepLabel>
+              <StepContent>
+                <Typography>{getStepContent(index)}</Typography>
+                {getStepForm(index)}
+                <div className={classes.actionsContainer}>
+                  <div>
+                    <Button
+                      disabled={activeStep === 0}
+                      onClick={handleBack}
+                      className={classes.button}
+                    >
+                      Back
+                    </Button>
+                    {isStepOptional(activeStep) && (
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSkip}
+                        className={classes.button}
+                      >
+                        Skip
+                      </Button>
+                    )}
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      className={classes.button}
+                    >
+                      {activeStep === steps.length - 1 ? 'Generate List' : 'Next'}
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            </StepContent>
-          </Step>
-        ))}
+              </StepContent>
+            </Step>
+          );
+        })}
       </Stepper>
       {activeStep === steps.length && (
         <Paper square elevation={0} className={classes.resetContainer}>
-          <Container component="main" maxWidth="xs">
+          <Container component="main" maxWidth="xs" align = "center" justify = "center" alignItems = "center">
             <Typography component="h1" variant="h5">
               Generating your list ...
             </Typography>
-            <CircularProgress />
+            <CircularProgress/>
             {loadingList()}
           </Container>
         </Paper>
