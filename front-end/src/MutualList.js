@@ -24,16 +24,23 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { Input } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    // maxWidth: 752,
+    maxWidth: 650,
     backgroundColor: theme.palette.background.paper,
     width: '100%',
-    // marginTop: "5%",
-    paddingLeft: "25%",
-    paddingRight: "25%",
+    marginTop: "2%",
+    // marginLeft: "2%",
+    // paddingLeft: "25%",
+    // paddingRight: "25%",
   },
   demo: {
     backgroundColor: theme.palette.background.paper,
@@ -63,6 +70,12 @@ const useStyles = makeStyles((theme) => ({
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
   },
+  dialog: {
+    position: 'absolute',
+    right: 50,
+    top: 100,
+    width: 500,
+  },
 }));
 
 export default function MutualList(props) {
@@ -71,6 +84,16 @@ export default function MutualList(props) {
   const [checked, setChecked] = React.useState([1]);
   const { spots } = props;
   const [mutualSpots, setMutualSpots] = useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [date, setDate] = useState(true);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     axios.get("/user_spots/mutual").then((res) => {
@@ -114,7 +137,8 @@ export default function MutualList(props) {
               {getMutualSpots().map((value) => {
                 const labelId = `checkbox-list-secondary-label-${value.id}`;
                 return (
-                  <ListItem key={value.id} button>
+                  <>
+                  <ListItem key={value.id} button onClick={handleClickOpen}>
                     <ListItemAvatar>
                       <Avatar alt={value.title} src={value.image_url} />
                     </ListItemAvatar>
@@ -123,15 +147,52 @@ export default function MutualList(props) {
                       primary={value.title}
                       secondary={secondary ? value.description : null}
                     />
-                    <ListItemSecondaryAction>
+                    {/* <ListItemSecondaryAction>
                       <Checkbox
                         edge="end"
                         onChange={handleToggle(value)}
                         checked={checked.indexOf(value) !== -1}
                         inputProps={{ "aria-labelledby": labelId }}
                       />
-                    </ListItemSecondaryAction>
+                    </ListItemSecondaryAction> */}
                   </ListItem>
+                  <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" classes={{ paper: classes.dialog }}>
+                    <DialogTitle id="form-dialog-title">Add Details</DialogTitle>
+                    <DialogContent>
+                      <DialogContentText>
+                        To select this as your date spot, please choose a time and add activities!
+                      </DialogContentText>
+                      <form className={classes.container} noValidate>
+                        <TextField
+                          id="datetime-local"
+                          label="Date & Time"
+                          type="datetime-local"
+                          className={classes.textField}
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                        />
+                      </form>
+                      <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Activities"
+                        type="activities"
+                        multiline
+                        style = {{width: 400}}
+                      />
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={handleClose} color="primary">
+                        Cancel
+                      </Button>
+                      <Button onClick={handleClose} variant="contained" color="primary">
+                        Set Date Spot
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                  </>
                 );
               })}
             </List>
@@ -167,13 +228,13 @@ export default function MutualList(props) {
       >
         Add more spots
       </Button>
-      <Button type="submit" variant="contained" color="primary">
+      {/* <Button type="submit" variant="contained" color="primary">
         Chooose your date spot
-      </Button>
+      </Button> */}
       <Button type="submit" variant="contained" color="secondary">
         Pick a random date spot
       </Button>
-      <Accordion>
+      {/* <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -186,7 +247,8 @@ export default function MutualList(props) {
             This area will have details about past date spots.
           </Typography>
         </AccordionDetails>
-      </Accordion>
+      </Accordion> */}
+      
     </div>
   );
 }
