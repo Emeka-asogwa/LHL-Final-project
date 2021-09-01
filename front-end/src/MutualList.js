@@ -30,6 +30,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Input } from "@material-ui/core";
+import SpotListItem from "./SpotListItem";
 
 const useStyles = makeStyles((theme) => ({
   root: {
