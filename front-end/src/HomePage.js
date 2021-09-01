@@ -1,171 +1,57 @@
-import React from "react";
-import { alpha, makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import InputBase from "@material-ui/core/InputBase";
-import Badge from "@material-ui/core/Badge";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
-import MenuIcon from "@material-ui/icons/Menu";
-import SearchIcon from "@material-ui/icons/Search";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import MailIcon from "@material-ui/icons/Mail";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import MoreIcon from "@material-ui/icons/MoreVert";
-// import BackgroundImg from "./dateNite.png";
+import { makeStyles } from "@material-ui/core/styles";
+import ProductHeroLayout from "./ProductHeroLayout";
+
+const backgroundImage =
+  'https://source.unsplash.com/5JwBbnyZzfc/';
 
 const useStyles = makeStyles((theme) => ({
-  grow: {
-    flexGrow: 1,
+  background: {
+    backgroundImage: `url(${backgroundImage})`,
+    backgroundColor: '#7fc7d9', // Average color of the background image.
+    backgroundPosition: 'center',
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
+  button: {
+    minWidth: 200,
   },
-  title: {
-    display: "none",
-    [theme.breakpoints.up("sm")]: {
-      display: "block",
+  h5: {
+    marginBottom: theme.spacing(6),
+    marginTop: theme.spacing(4),
+    [theme.breakpoints.up('sm')]: {
+      marginTop: theme.spacing(10),
     },
   },
-  search: {
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
-      width: "auto",
-    },
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  inputRoot: {
-    color: "inherit",
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-  sectionDesktop: {
-    display: "none",
-    [theme.breakpoints.up("md")]: {
-      display: "flex",
-    },
-  },
-  sectionMobile: {
-    display: "flex",
-    [theme.breakpoints.up("md")]: {
-      display: "none",
-    },
+  more: {
+    marginTop: theme.spacing(2),
   },
 }));
 
 export default function HomePage() {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
-
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
-
-  const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
-
-  const mobileMenuId = "primary-search-account-menu-mobile";
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
-  );
-
+  
   return (
-    <>
-      {renderMobileMenu}
-      {renderMenu}
-    </>
+    <ProductHeroLayout backgroundClassName={classes.background}>
+      <img style={{ display: 'none' }} src={backgroundImage} alt="background-img" />
+      <Typography color="inherit" align="center" variant="h2" marked="center">
+        Too indecisive? Out of ideas?
+      </Typography>
+      <Typography color="inherit" align="center" variant="h5" className={classes.h5}>
+        Find a date spot that both you and your partner will love.
+      </Typography>
+      <Button
+        color="primary"
+        variant="contained"
+        size="large"
+        className={classes.button}
+        component="a"
+        href="/register"
+      >
+        Register
+      </Button>
+      <Typography variant="body2" color="inherit" className={classes.more}>
+        Plan your next date
+      </Typography>
+    </ProductHeroLayout>
   );
 }

@@ -74,7 +74,8 @@ export default function Login() {
     e.preventDefault();
     const user = { email, password };
     axios.post("/login", user).then((res) => {
-      history.push("/start", { userId: res.data.userId });
+      localStorage.setItem("userID", res.data.userId.toString());
+      history.push("/start");
     });
   }
 

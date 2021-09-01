@@ -66,8 +66,8 @@ export default function Register() {
     e.preventDefault();
     const user = { firstName, lastName, email, password };
     axios.post("/register", user).then((res) => {
-      console.log(res);
-      history.push("/start", { userId: res.data.userId });
+      localStorage.setItem("userID", res.data.userId.toString());
+      history.push("/start");
     });
   }
 

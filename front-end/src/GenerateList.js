@@ -17,9 +17,9 @@ import axios from './config/axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
-    // width: "50%",
-    justifyContent: "center",
+    // display: "flex",
+    width: "100%",
+    // justifyContent: "center",
     // paddingLeft: "25%",
     // paddingRight: "25%",
     // marginTop: "5%",
@@ -71,7 +71,7 @@ export default function GenerateList(props) {
   const steps = getSteps();
   const [filteredSpots, setFilteredSpots] = useState(spots);
   const history = useHistory();
-  const userId = history.location.state?.userId;
+  const userId = parseInt(localStorage.getItem("userID"));
   const [skipped, setSkipped] = useState(new Set());
 
   const isStepOptional = (step) => {
@@ -128,7 +128,10 @@ export default function GenerateList(props) {
 
   function loadingList() {
     setTimeout(() => history.push("/mutuallist"), 3000);
-    setTimeout(() => localStorage.clear(), 3000);
+    setTimeout(() => {
+      localStorage.removeItem('activeStep');
+      localStorage.removeItem('location');
+    }, 3000);
   }
 
   useEffect(() => {

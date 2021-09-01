@@ -1,26 +1,14 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
 import { alpha, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import InputBase from "@material-ui/core/InputBase";
-import Badge from "@material-ui/core/Badge";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
-import MenuIcon from "@material-ui/icons/Menu";
-import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import MailIcon from "@material-ui/icons/Mail";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import MoreIcon from "@material-ui/icons/MoreVert";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -88,33 +76,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Navbar(props) {
   const classes = useStyles();
+  
   const menuId = "primary-search-account-menu";
-  const mobileMenuId = "primary-search-account-menu-mobile";
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const history = useHistory();
+  const userID = localStorage.getItem("userID");
+
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
-
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
-
   const logOut = () => {
     history.push("/");
+    localStorage.clear();
   };
 
   return (
@@ -122,32 +96,29 @@ export default function Navbar(props) {
       <React.StrictMode>
         <AppBar position="static">
           <Toolbar>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="open drawer"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography className={classes.title} variant="h6" noWrap>
+            <Link to="/" style={{ textDecoration: 'none', color: "white", fontSize: 35 }}>
               DateNite
-            </Typography>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ "aria-label": "search" }}
-              />
-            </div>
+            </Link>
             <div className={classes.grow} />
-            <div className={classes.sectionDesktop}>
+            {!userID && <div className={classes.sectionDesktop}>
+                <Button
+                  disableElevation
+                  variant="contained"
+                  color="primary"
+                  onClick={() => { history.push("/register") }}
+                >
+                  Register
+                </Button>
+                <Button
+                  disableElevation
+                  variant="contained"
+                  color="primary"
+                  onClick={() => { history.push("/login") }}
+                >
+                  Login
+                </Button>
+            </div>}
+            {userID && <div className={classes.sectionDesktop}>
               <IconButton
                 edge="end"
                 aria-label="account of current user"
@@ -166,18 +137,7 @@ export default function Navbar(props) {
               >
                 <Button onClick={logOut}>Logout</Button>
               </ButtonGroup>
-            </div>
-            <div className={classes.sectionMobile}>
-              <IconButton
-                aria-label="show more"
-                aria-controls={mobileMenuId}
-                aria-haspopup="true"
-                onClick={handleMobileMenuOpen}
-                color="inherit"
-              >
-                <MoreIcon />
-              </IconButton>
-            </div>
+            </div>}
           </Toolbar>
         </AppBar>
         {props.children}
@@ -185,8 +145,3 @@ export default function Navbar(props) {
     </div>
   );
 }
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

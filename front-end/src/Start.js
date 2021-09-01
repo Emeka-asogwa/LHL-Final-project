@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     width: 300,
     height: 300,
     borderRadius: '50%',
+    marginTop: 80,
   },
   startKey: {
     backgroundColor: "white",
@@ -40,7 +41,7 @@ export default function Start(props) {
   }, []);
 
   useEffect(() => {
-    setUserName(getName(history.location.state?.userId));
+    setUserName(getName(parseInt(localStorage.getItem("userID"))));
   }, [users]);
 
   function getName(id) {
@@ -63,7 +64,7 @@ export default function Start(props) {
         variant="contained"
         color="primary"
       >
-        <Link to={{pathname:"/generatelist", state: { userId: history.location.state?.userId}}} style={{ textDecoration: 'none', color: "white" }}>
+        <Link to="/generatelist" style={{ textDecoration: 'none', color: "white" }}>
           Start building your list
         </Link>
       </Button>

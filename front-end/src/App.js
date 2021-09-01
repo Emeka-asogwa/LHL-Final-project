@@ -65,7 +65,7 @@ export default function App() {
             </Navbar>
           </Route>
         </Switch>
-        <nav>
+        {/* <nav>
           <ul>
             <li>
               <Link to="/about">About</Link>
@@ -89,7 +89,7 @@ export default function App() {
               <Link to="/">Home</Link>
             </li>
           </ul>
-        </nav>
+        </nav> */}
       </div>
     </Router>
   );
