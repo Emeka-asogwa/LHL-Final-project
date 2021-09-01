@@ -190,7 +190,7 @@ export default function GenerateList(props) {
               <SpotCard spot={spot} partner={partner} />
             ))}
           </Grid>
-        </Container>
+        </Container> )
     } else if (index === 2) {
       form = <form className={classes.form} noValidate onSubmit={(e) => { handleSubmit(e) }}>
           <Grid container spacing={2}>
