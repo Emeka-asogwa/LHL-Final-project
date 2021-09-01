@@ -5,32 +5,33 @@ import "./datetime.css";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import Checkbox from '@material-ui/core/Checkbox';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import FolderIcon from '@material-ui/icons/Folder';
-import Button from '@material-ui/core/Button';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import TextField from '@material-ui/core/TextField';
-import axios from './config/axios';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import ListItemText from "@material-ui/core/ListItemText";
+import Avatar from "@material-ui/core/Avatar";
+import IconButton from "@material-ui/core/IconButton";
+import Checkbox from "@material-ui/core/Checkbox";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import FolderIcon from "@material-ui/icons/Folder";
+import Button from "@material-ui/core/Button";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+import TextField from "@material-ui/core/TextField";
+import axios from "./config/axios";
+import Accordion from "@material-ui/core/Accordion";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import SpotListItem from "./SpotListItem";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     // maxWidth: 752,
     backgroundColor: theme.palette.background.paper,
-    width: '100%',
+    width: "100%",
     // marginTop: "5%",
     paddingLeft: "25%",
     paddingRight: "25%",
@@ -67,6 +68,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MutualList(props) {
   const classes = useStyles();
+  const [card, setCard] = React.useState();
   const [secondary, setSecondary] = React.useState(true);
   const [checked, setChecked] = React.useState([1]);
   const { spots } = props;
@@ -79,6 +81,9 @@ export default function MutualList(props) {
       setMutualSpots(res.data);
     });
   }, []);
+  const handleClick = (value) => () => {
+    setCard(value);
+  };
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -114,7 +119,7 @@ export default function MutualList(props) {
               {getMutualSpots().map((value) => {
                 const labelId = `checkbox-list-secondary-label-${value.id}`;
                 return (
-                  <ListItem key={value.id} button>
+                  <ListItem key={value.id} onClick={handleClick(value)} button>
                     <ListItemAvatar>
                       <Avatar alt={value.title} src={value.image_url} />
                     </ListItemAvatar>
@@ -135,6 +140,7 @@ export default function MutualList(props) {
                 );
               })}
             </List>
+            {card && <SpotListItem location={{ spot: card }} />}
           </div>
         </Grid>
         {/* <Grid item xs={12} md={6}>
