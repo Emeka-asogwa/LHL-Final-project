@@ -4,15 +4,20 @@ import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios from "./config/axios";
+import { useEffect, useState } from 'react';
+import axios from './config/axios';
+import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
       margin: theme.spacing(1),
-      width: "50ch",
     },
+  },
+  img: {
+    width: 300,
+    height: 300,
+    borderRadius: '50%',
   },
   startKey: {
     backgroundColor: "white",
@@ -45,23 +50,23 @@ export default function Start(props) {
   }
 
   return (
-    <Container component="main" maxWidth="xs" className={classes.startKey}>
+    <Container className={classes.root} component="main" maxWidth="xs" align = "center" justify = "center" alignItems = "center">
       <CssBaseline />
+      <img className={classes.img} alt="cartoon-date" src="https://media.istockphoto.com/vectors/illustration-of-romantic-date-vector-id1056840218?k=20&m=1056840218&s=612x612&w=0&h=1PX5kGppsR5BGi_rqfDvjoGfqKgW5ySRV-LNcAKX-00="/>
       <Typography component="h1" variant="h5">
-        Welcome {userName}!
+        Welcome, {userName}!
       </Typography>
-      <Typography component="h1" variant="h5">
+      <Typography component="h1" variant="subtitle1" color="textSecondary">
         You currently have no date spots.
       </Typography>
-      <Link
-        to={{
-          pathname: "/generatelist",
-          state: { userId: history.location.state?.userId },
-        }}
-        variant="body2"
+      <Button
+        variant="contained"
+        color="primary"
       >
-        Click here to get started.
-      </Link>
+        <Link to={{pathname:"/generatelist", state: { userId: history.location.state?.userId}}} style={{ textDecoration: 'none', color: "white" }}>
+          Start building your list
+        </Link>
+      </Button>
     </Container>
   );
 }
