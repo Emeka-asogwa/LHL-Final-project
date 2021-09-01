@@ -1,8 +1,8 @@
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Container from "@material-ui/core/Container";
+import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import axios from './config/axios';
@@ -10,7 +10,7 @@ import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    '& > *': {
+    "& > *": {
       margin: theme.spacing(1),
     },
   },
@@ -19,17 +19,20 @@ const useStyles = makeStyles((theme) => ({
     height: 300,
     borderRadius: '50%',
   },
+  startKey: {
+    backgroundColor: "white",
+  },
 }));
 
 export default function Start(props) {
   const classes = useStyles();
   const history = useHistory();
-  
+
   const [users, setUsers] = useState([]);
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
-    axios.get("/users").then(res => {
+    axios.get("/users").then((res) => {
       console.log("Response has comeback!");
       console.log(res);
       setUsers(res.data);
@@ -38,12 +41,12 @@ export default function Start(props) {
 
   useEffect(() => {
     setUserName(getName(history.location.state?.userId));
-  }, [users])
+  }, [users]);
 
   function getName(id) {
     console.log(id);
-    const user = users.filter(user => user.id === id)[0]
-    return (user) ? user.name : "Default User";
+    const user = users.filter((user) => user.id === id)[0];
+    return user ? user.name : "Default User";
   }
 
   return (
@@ -65,5 +68,5 @@ export default function Start(props) {
         </Link>
       </Button>
     </Container>
-  )
+  );
 }

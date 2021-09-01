@@ -1,23 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import StepContent from '@material-ui/core/StepContent';
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import SpotCard from './SpotCard';
-import { Grid } from '@material-ui/core';
-import Container from '@material-ui/core/Container';
-import { CircularProgress } from '@material-ui/core';
+import React, { useState, useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
+import StepContent from "@material-ui/core/StepContent";
+import Button from "@material-ui/core/Button";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
+import SpotCard from "./SpotCard";
+import { Grid } from "@material-ui/core";
+import Container from "@material-ui/core/Container";
+import { CircularProgress } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import axios from './config/axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
+    display: "flex",
+    // width: "50%",
+    justifyContent: "center",
+    // paddingLeft: "25%",
+    // paddingRight: "25%",
+    // marginTop: "5%",
   },
   button: {
     marginTop: theme.spacing(1),
@@ -47,13 +52,13 @@ function getStepContent(step) {
     case 0:
       return `Enter your partner's email so that we can find the date spots you both want to visit.`;
     case 1:
-      return 'Enter your location to find date spots near you. For each spot, you can click the green button to add it to your list, or the red button if you do not want it.';
+      return "Enter your location to find date spots near you. For each spot, you can click the green button to add it to your list, or the red button if you do not want it.";
     case 2:
       return `Already got a place in mind? Enter the details of you own date spot below.`;
     case 3:
       return `Now that you've picked your date spots, let's see which spots both you and your partner agree on!`;
     default:
-      return 'Unknown step';
+      return "Unknown step";
   }
 }
 
@@ -139,7 +144,7 @@ export default function GenerateList(props) {
   }, [location]);
   
   useEffect(() => {
-    localStorage.setItem('activeStep', activeStep.toString());
+    localStorage.setItem("activeStep", activeStep.toString());
   }, [activeStep]);
 
   function handleSubmit(e) {
@@ -154,26 +159,36 @@ export default function GenerateList(props) {
   function getStepForm(index) {
     let form;
     if (index === 0) {
-      form = <Container component="main" className={classes.resetContainer}>
-            <TextField 
+      form = (
+        <Container component="main" className={classes.resetContainer}>
+          <TextField
             id="standard-basic"
             label="Partner"
             placeholder="Enter your partner's email"
             value={partner}
-            onChange={e => setPartner(e.target.value)}
+            onChange={(e) => setPartner(e.target.value)}
           />
         </Container>
+      );
     } else if (index === 1) {
-      form = <Container component="main" className={classes.resetContainer}>
-            <TextField 
+      form = (
+        <Container component="main" className={classes.resetContainer}>
+          <TextField
             id="standard-basic"
             label="Location"
             placeholder="Enter your location"
             value={location}
-            onChange={e => handleOnChange(e)}
+            onChange={(e) => handleOnChange(e)}
           />
-          <Grid container spacing={2} alignItems={'center'} justifyContent={'space-evenly'}>
-            {filteredSpots.map(spot => (<SpotCard spot={spot} partner={partner} />))}
+          <Grid
+            container
+            spacing={2}
+            alignItems={"center"}
+            justifyContent={"space-evenly"}
+          >
+            {filteredSpots.map((spot) => (
+              <SpotCard spot={spot} partner={partner} />
+            ))}
           </Grid>
         </Container>
     } else if (index === 2) {

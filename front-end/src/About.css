@@ -1,0 +1,8 @@
+/* body {
+  background-image: url("dateNite.jpg");
+} */
+
+.show-img {
+  background-image: url("dateNite.jpg");
+  width: 100%;
+}
