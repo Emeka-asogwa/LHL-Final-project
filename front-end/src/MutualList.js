@@ -80,6 +80,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MutualList(props) {
   const classes = useStyles();
+  const [card, setCard] = React.useState();
   const [secondary, setSecondary] = React.useState(true);
   const [checked, setChecked] = React.useState([1]);
   const { spots } = props;
@@ -102,6 +103,9 @@ export default function MutualList(props) {
       setMutualSpots(res.data);
     });
   }, []);
+  const handleClick = (value) => () => {
+    setCard(value);
+  };
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -196,6 +200,7 @@ export default function MutualList(props) {
                 );
               })}
             </List>
+            {card && <SpotListItem location={{ spot: card }} />}
           </div>
         </Grid>
         {/* <Grid item xs={12} md={6}>
