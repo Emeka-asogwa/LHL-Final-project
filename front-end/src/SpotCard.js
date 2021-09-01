@@ -25,7 +25,7 @@ const useStyles = makeStyles({
 
 export default function SpotCard(props) {
   const classes = useStyles();
-  const { spot, partner } = props;
+  const { spot, partner, noButtons } = props;
   const history = useHistory();
   const [show, setShow] = useState(true);
   
@@ -64,12 +64,15 @@ export default function SpotCard(props) {
                 More Info
               </Button>
             </Link>
+            {!noButtons &&
+            <>
             <IconButton onClick={() => { handleClick(false) }}>
               <CancelIcon color="error" fontSize='medium'/>
             </IconButton>
             <IconButton onClick={() => { handleClick(true) }}>
               <CheckCircleIcon style={{ color: 'green' }} fontSize='medium'/>
             </IconButton>
+            </>}
           </CardActions>
         </Card>
       </Grid>}

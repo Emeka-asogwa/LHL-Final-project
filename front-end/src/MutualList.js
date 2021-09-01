@@ -32,6 +32,8 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Input } from "@material-ui/core";
 import SpotListItem from "./SpotListItem";
+import SpotCard from "./SpotCard";
+import { Paper, Container } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -91,7 +93,7 @@ export default function MutualList(props) {
   const { spots } = props;
   const [mutualSpots, setMutualSpots] = useState([]);
   const [open, setOpen] = React.useState(false);
-  const [date, setDate] = useState(true);
+  const [date, setDate] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -99,6 +101,11 @@ export default function MutualList(props) {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleDate = () => {
+    setOpen(false);
+    setDate(true);
   };
 
   useEffect(() => {
@@ -201,20 +208,25 @@ export default function MutualList(props) {
                           multiline
                           style={{ width: 400 }}
                         />
-                      </DialogContent>
-                      <DialogActions>
-                        <Button onClick={handleClose} color="primary">
-                          Cancel
-                        </Button>
-                        <Button
-                          onClick={handleClose}
-                          variant="contained"
-                          color="primary"
-                        >
-                          Set Date Spot
-                        </Button>
-                      </DialogActions>
-                    </Dialog>
+                      <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Activities"
+                        type="activities"
+                        multiline
+                        style = {{width: 400}}
+                      />
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={handleClose} color="primary">
+                        Cancel
+                      </Button>
+                      <Button onClick={handleDate} variant="contained" color="primary">
+                        Set Date Spot
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
                   </>
                 );
               })}
@@ -275,6 +287,20 @@ export default function MutualList(props) {
           </Typography>
         </AccordionDetails>
       </Accordion> */}
+      {date && <Paper variant="outlined" square>
+        <Container component="main" align = "center" justify = "center" alignItems = "center">
+          <Typography variant="h5" className={classes.title}>
+            Your date
+          </Typography>
+          <SpotCard spot={spots[0]} noButtons={true} />
+          <Typography variant="h6" component="h2">
+            Date
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            Activity Description
+          </Typography>
+        </Container>
+      </Paper>}
     </div>
   );
 }
