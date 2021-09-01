@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
       margin: theme.spacing(1),
-      width: '50ch',
     },
   },
   img: {
@@ -48,7 +47,7 @@ export default function Start(props) {
   }
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container className={classes.root} component="main" maxWidth="xs" align = "center" justify = "center" alignItems = "center">
       <CssBaseline />
       <img className={classes.img} alt="cartoon-date" src="https://media.istockphoto.com/vectors/illustration-of-romantic-date-vector-id1056840218?k=20&m=1056840218&s=612x612&w=0&h=1PX5kGppsR5BGi_rqfDvjoGfqKgW5ySRV-LNcAKX-00="/>
       <Typography component="h1" variant="h5">
