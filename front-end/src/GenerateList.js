@@ -16,10 +16,12 @@ import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "50%",
-    paddingLeft: "25%",
-    paddingRight: "25%",
-    marginTop: "5%",
+    display: "flex",
+    // width: "50%",
+    justifyContent: "center",
+    // paddingLeft: "25%",
+    // paddingRight: "25%",
+    // marginTop: "5%",
   },
   button: {
     marginTop: theme.spacing(1),

@@ -20,6 +20,7 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -94,6 +95,7 @@ export default function Navbar(props) {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const history = useHistory();
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -110,6 +112,11 @@ export default function Navbar(props) {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const logOut = () => {
+    history.push("/");
+  };
+
   return (
     <div className={classes.grow}>
       <React.StrictMode>
@@ -124,7 +131,7 @@ export default function Navbar(props) {
               <MenuIcon />
             </IconButton>
             <Typography className={classes.title} variant="h6" noWrap>
-              CoupleHangout
+              DateNite
             </Typography>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
@@ -151,8 +158,13 @@ export default function Navbar(props) {
               >
                 <AccountCircle />
               </IconButton>
-              <ButtonGroup disableElevation variant="contained" color="primary">
-                <Button>Logout</Button>
+              <ButtonGroup
+                disableElevation
+                variant="contained"
+                color="primary"
+                style={{ textTransform: "none" }}
+              >
+                <Button onClick={logOut}>Logout</Button>
               </ButtonGroup>
             </div>
             <div className={classes.sectionMobile}>
