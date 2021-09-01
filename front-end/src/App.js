@@ -57,7 +57,9 @@ export default function App() {
             </Navbar>
           </Route>
           <Route path="/mutuallist">
-            <MutualList spots={spots} />
+            <Navbar>
+              <MutualList spots={spots} />
+            </Navbar>
           </Route>
           <Route path="/">
             <Navbar>
