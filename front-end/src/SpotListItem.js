@@ -1,13 +1,13 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import CancelIcon from '@material-ui/icons/Cancel';
-import { Button } from '@material-ui/core';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
+import ButtonBase from "@material-ui/core/ButtonBase";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import CancelIcon from "@material-ui/icons/Cancel";
+import { Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
-    margin: 'auto',
+    margin: "auto",
     maxWidth: 500,
   },
   image: {
@@ -24,10 +24,10 @@ const useStyles = makeStyles((theme) => ({
     height: 470,
   },
   img: {
-    margin: 'auto',
-    display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%',
+    margin: "auto",
+    display: "block",
+    maxWidth: "100%",
+    maxHeight: "100%",
   },
   button: {
     margin: theme.spacing(5),
@@ -39,7 +39,7 @@ export default function SpotListItem(props) {
   const classes = useStyles();
   const { title, description, location, url, image_url } = props.location.spot;
   const history = useHistory();
-  
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -73,26 +73,28 @@ export default function SpotListItem(props) {
           </Grid>
         </Grid>
         <Button
-            variant="outlined"
-            className={classes.button}
-            startIcon={<CancelIcon color="error" fontSize='large'/>}
-            onClick={ ()=>history.goBack() }
-          >
-            Not Interested
+          variant="outlined"
+          className={classes.button}
+          startIcon={<CancelIcon color="error" fontSize="large" />}
+          onClick={() => history.goBack()}
+        >
+          Not Interested
         </Button>
         <Button
-            variant="outlined"
-            className={classes.button}
-            startIcon={<CheckCircleIcon style={{ color: 'green' }} fontSize='large'/>}
-            onClick={ ()=>history.goBack() }
-          >
-            Add to my list
+          variant="outlined"
+          className={classes.button}
+          startIcon={
+            <CheckCircleIcon style={{ color: "green" }} fontSize="large" />
+          }
+          onClick={() => history.goBack()}
+        >
+          Add to my list
         </Button>
         <Button
           fullWidth
           variant="contained"
           color="primary"
-          onClick={ ()=>history.goBack() }
+          onClick={() => history.goBack()}
         >
           Back
         </Button>

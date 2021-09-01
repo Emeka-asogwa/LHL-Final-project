@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 // react component plugin for creating a beautiful datetime dropdown picker
 import Datetime from "react-datetime";
 import "./datetime.css";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
@@ -33,8 +34,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     width: "100%",
     // marginTop: "5%",
-    paddingLeft: "25%",
-    paddingRight: "25%",
+    // paddingLeft: "25%",
+    // paddingRight: "25%",
   },
   demo: {
     backgroundColor: theme.palette.background.paper,
@@ -109,8 +110,10 @@ export default function MutualList(props) {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={2}>
-        <Grid item>
+      <Grid container component="main" spacing={2}>
+        <CssBaseline />
+
+        <Grid item xs={4} sm={4} md={4}>
           <Typography variant="h6" className={classes.title}>
             You and your partner both chose:
           </Typography>
@@ -140,8 +143,10 @@ export default function MutualList(props) {
                 );
               })}
             </List>
-            {card && <SpotListItem location={{ spot: card }} />}
           </div>
+        </Grid>
+        <Grid item xs={8} sm={8} md={8}>
+          {card && <SpotListItem location={{ spot: card }} />}
         </Grid>
         {/* <Grid item xs={12} md={6}>
           <InputLabel className={classes.label}>
@@ -166,6 +171,7 @@ export default function MutualList(props) {
           </form>
         </Grid> */}
       </Grid>
+
       <Button
         variant="outlined"
         startIcon={<AddCircleIcon color="primary" />}
