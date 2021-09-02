@@ -34,6 +34,7 @@ import { Input } from "@material-ui/core";
 import SpotListItem from "./SpotListItem";
 import SpotCard from "./SpotCard";
 import { Paper, Container } from "@material-ui/core";
+import dateFormat from 'dateformat';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -94,6 +95,8 @@ export default function MutualList(props) {
   const [mutualSpots, setMutualSpots] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [date, setDate] = useState(false);
+  const [activities, setActivities] = useState('');
+  const [time, setTime] = useState('');
   const userID = parseInt(localStorage.getItem("userID"));
 
   const handleClickOpen = () => {
@@ -196,6 +199,7 @@ export default function MutualList(props) {
                             InputLabelProps={{
                               shrink: true,
                             }}
+                            onChange={(e) => setTime(e.target.value)}
                           />
                         </form>
                         <TextField
@@ -206,6 +210,7 @@ export default function MutualList(props) {
                           type="activities"
                           multiline
                           style={{ width: 400 }}
+                          onChange={(e) => setActivities(e.target.value)}
                         />
                     </DialogContent>
                     <DialogActions>
@@ -284,10 +289,10 @@ export default function MutualList(props) {
           </Typography>
           <SpotCard spot={spots[0]} noButtons={true} />
           <Typography variant="h6" component="h2">
-            Date
+            {dateFormat(time, "dddd, mmmm dS, yyyy, h:MM TT")}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Activity Description
+          <Typography variant="body2" color="textSecondary" component="p" style={{whiteSpace: "pre-line"}}>
+            {activities}
           </Typography>
         </Container>
       </Paper>}
