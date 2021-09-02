@@ -71,8 +71,9 @@ export default function GenerateList(props) {
   const steps = getSteps();
   const [filteredSpots, setFilteredSpots] = useState(spots);
   const history = useHistory();
-  const userId = parseInt(localStorage.getItem("userID"));
+  const userID = parseInt(localStorage.getItem("userID"));
   const [skipped, setSkipped] = useState(new Set());
+  const [users, setUsers] = useState([]);
 
   const isStepOptional = (step) => {
     return step === 2;
@@ -139,6 +140,9 @@ export default function GenerateList(props) {
     const input = localStorage.getItem('location');
     (step) ? setActiveStep(parseInt(step)) : setActiveStep(0);
     (input) ? setLocation(input) : setLocation('');
+    axios.get("/users").then((res) => {
+      setUsers(res.data);
+    });
   }, []);
 
   useEffect(() => {
@@ -157,7 +161,16 @@ export default function GenerateList(props) {
     .then(res => {
       console.log(res);
     });
-  } 
+  }
+
+  function getPartnerId(email) {
+    const user = users.filter(user => user.email === email);
+    if (user.length !== 0) {
+      return user[0].id;
+    } else {
+      return 0;
+    }
+  }
 
   function getStepForm(index) {
     let form;
@@ -190,7 +203,7 @@ export default function GenerateList(props) {
             justifyContent={"space-evenly"}
           >
             {filteredSpots.map((spot) => (
-              <SpotCard spot={spot} partner={partner} />
+              <SpotCard spot={spot} partner={getPartnerId(partner)} />
             ))}
           </Grid>
         </Container> )

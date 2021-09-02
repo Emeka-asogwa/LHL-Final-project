@@ -94,6 +94,7 @@ export default function MutualList(props) {
   const [mutualSpots, setMutualSpots] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [date, setDate] = useState(false);
+  const userID = parseInt(localStorage.getItem("userID"));
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -109,7 +110,7 @@ export default function MutualList(props) {
   };
 
   useEffect(() => {
-    axios.get("/user_spots/mutual").then((res) => {
+    axios.post("/couple_spots/mutual", { userID }).then((res) => {
       console.log("Response has comeback!");
       console.log(res);
       setMutualSpots(res.data);
@@ -212,7 +213,7 @@ export default function MutualList(props) {
                         Cancel
                       </Button>
                       <Button onClick={handleDate} variant="contained" color="primary">
-                        Set Date Spot
+                        Set Date
                       </Button>
                     </DialogActions>
                   </Dialog>

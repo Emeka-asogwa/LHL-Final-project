@@ -31,8 +31,8 @@ export default function SpotCard(props) {
   
   function handleClick(selected) {
     console.log("clicked");
-    const user_spot = { partner, selected, user_id: parseInt(localStorage.getItem("userID")), spot_id: spot.id };
-    axios.post("/user_spots", user_spot)
+    const user_spot = { partner_id: partner, selected, user_id: parseInt(localStorage.getItem("userID")), spot_id: spot.id };
+    axios.post("/couple_spots", user_spot)
     .then(res => {
       console.log(res);
       setShow(prev => !prev)
