@@ -56,6 +56,10 @@ const useStyles = makeStyles((theme) => ({
   title: {
     margin: theme.spacing(4, 0, 2),
   },
+  h5: {
+    margin: theme.spacing(4, 0, 2),
+    fontWeight: 700,
+  },
   label: {
     cursor: "pointer",
     paddingLeft: "0",
@@ -83,6 +87,14 @@ const useStyles = makeStyles((theme) => ({
     right: 50,
     top: 100,
     width: 500,
+  },
+  date: {
+    position: "absolute",
+    right: 30,
+    top: 100,
+    width: 600,
+    height: 500,
+    border: "groove 0.41em blue",
   },
 }));
 
@@ -253,6 +265,26 @@ export default function MutualList(props) {
             />
           </form>
         </Grid> */}
+        <Grid item>
+          {date && <Paper variant="outlined" square className={classes.date}>
+            <Container component="main" align = "center" justify = "center" alignItems = "center">
+              <Typography variant="h5" className={classes.h5}>
+                Date Info
+              </Typography>
+              <Grid container spacing={2}>
+                <SpotCard spot={spots[0]} noButtons={true} className={classes.info}/>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="h6" component="h2">
+                    {dateFormat(time, "dddd, mmmm dS, yyyy, h:MM TT")}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary" component="p" style={{whiteSpace: "pre-line"}}>
+                    {activities}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Container>
+          </Paper>}
+        </Grid>
       </Grid>
 
       <Button
@@ -282,20 +314,6 @@ export default function MutualList(props) {
           </Typography>
         </AccordionDetails>
       </Accordion> */}
-      {date && <Paper variant="outlined" square>
-        <Container component="main" align = "center" justify = "center" alignItems = "center">
-          <Typography variant="h5" className={classes.title}>
-            Your date
-          </Typography>
-          <SpotCard spot={spots[0]} noButtons={true} />
-          <Typography variant="h6" component="h2">
-            {dateFormat(time, "dddd, mmmm dS, yyyy, h:MM TT")}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p" style={{whiteSpace: "pre-line"}}>
-            {activities}
-          </Typography>
-        </Container>
-      </Paper>}
     </div>
   );
 }
