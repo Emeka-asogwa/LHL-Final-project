@@ -93,8 +93,9 @@ const useStyles = makeStyles((theme) => ({
     right: 30,
     top: 100,
     width: 600,
-    height: 500,
-    border: "groove 0.41em blue",
+    height: 400,
+    border: "solid 0.41em blue",
+    borderRadius: "3em",
   },
 }));
 
@@ -110,9 +111,11 @@ export default function MutualList(props) {
   const [activities, setActivities] = useState('');
   const [time, setTime] = useState('');
   const userID = parseInt(localStorage.getItem("userID"));
+  const [id, setId] = useState(0);
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (id) => {
     setOpen(true);
+    setId(id);
   };
 
   const handleClose = () => {
@@ -157,6 +160,10 @@ export default function MutualList(props) {
     );
   }
 
+  function getSpotById(id) {
+    return spots.filter(spot => spot.id === id)[0];
+  }
+
   return (
     <div className={classes.root}>
       <Grid container component="main" spacing={2}>
@@ -170,7 +177,7 @@ export default function MutualList(props) {
                 const labelId = `checkbox-list-secondary-label-${value.id}`;
                 return (
                   <>
-                    <ListItem key={value.id} button onClick={handleClickOpen}>
+                    <ListItem key={value.id} button onClick={() => handleClickOpen(value.id)}>
                       <ListItemAvatar>
                         <Avatar alt={value.title} src={value.image_url} />
                       </ListItemAvatar>
@@ -272,7 +279,7 @@ export default function MutualList(props) {
                 Date Info
               </Typography>
               <Grid container spacing={2}>
-                <SpotCard spot={spots[0]} noButtons={true} className={classes.info}/>
+                <SpotCard spot={getSpotById(id)} noButtons={true} className={classes.info}/>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="h6" component="h2">
                     {dateFormat(time, "dddd, mmmm dS, yyyy, h:MM TT")}
