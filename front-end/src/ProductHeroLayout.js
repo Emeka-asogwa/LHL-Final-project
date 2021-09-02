@@ -17,7 +17,7 @@ const styles = (theme) => ({
     },
   },
   container: {
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(27),
     marginBottom: theme.spacing(14),
     display: 'flex',
     flexDirection: 'column',
@@ -32,6 +32,7 @@ const styles = (theme) => ({
     backgroundColor: theme.palette.common.black,
     opacity: 0.5,
     zIndex: -1,
+    height: "100vh",
   },
   background: {
     position: 'absolute',

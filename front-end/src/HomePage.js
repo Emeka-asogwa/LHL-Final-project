@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage: `url(${backgroundImage})`,
     backgroundColor: '#7fc7d9', // Average color of the background image.
     backgroundPosition: 'center',
+    height: "100vh",
   },
   button: {
     minWidth: 200,
@@ -21,6 +22,10 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       marginTop: theme.spacing(10),
     },
+    fontWeight: 600,
+  },
+  h2: {
+    fontWeight: 500,
   },
   more: {
     marginTop: theme.spacing(2),
@@ -33,7 +38,7 @@ export default function HomePage() {
   return (
     <ProductHeroLayout backgroundClassName={classes.background}>
       <img style={{ display: 'none' }} src={backgroundImage} alt="background-img" />
-      <Typography color="inherit" align="center" variant="h2" marked="center">
+      <Typography color="inherit" align="center" variant="h2" marked="center" className={classes.h2}>
         Too indecisive? Out of ideas?
       </Typography>
       <Typography color="inherit" align="center" variant="h5" className={classes.h5}>
