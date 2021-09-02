@@ -144,9 +144,7 @@ export default function MutualList(props) {
   return (
     <div className={classes.root}>
       <Grid container component="main" spacing={2}>
-        <CssBaseline />
-
-        <Grid item xs={4} sm={4} md={4}>
+        <Grid item>
           <Typography variant="h6" className={classes.title}>
             You and your partner both chose:
           </Typography>
@@ -208,15 +206,6 @@ export default function MutualList(props) {
                           multiline
                           style={{ width: 400 }}
                         />
-                      <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Activities"
-                        type="activities"
-                        multiline
-                        style = {{width: 400}}
-                      />
                     </DialogContent>
                     <DialogActions>
                       <Button onClick={handleClose} color="primary">
