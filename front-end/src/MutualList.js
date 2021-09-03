@@ -34,6 +34,7 @@ import { Input } from "@material-ui/core";
 import SpotListItem from "./SpotListItem";
 import SpotCard from "./SpotCard";
 import { Paper, Container } from "@material-ui/core";
+import dateFormat from 'dateformat';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
     width: "100%",
     marginTop: "2%",
-    // marginLeft: "2%",
+    marginLeft: "1%",
 
     // paddingLeft: "25%",
     // paddingRight: "25%",
@@ -53,7 +54,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
   title: {
+    margin: theme.spacing(4, 3, 2),
+  },
+  h5: {
     margin: theme.spacing(4, 0, 2),
+    fontWeight: 700,
   },
   label: {
     cursor: "pointer",
@@ -83,6 +88,18 @@ const useStyles = makeStyles((theme) => ({
     top: 100,
     width: 500,
   },
+  date: {
+    position: "absolute",
+    right: 30,
+    top: 100,
+    width: 600,
+    height: 400,
+    border: "solid 0.41em blue",
+    borderRadius: "3em",
+  },
+  buttons: {
+    marginLeft: 80,
+  },
 }));
 
 export default function MutualList(props) {
@@ -94,9 +111,14 @@ export default function MutualList(props) {
   const [mutualSpots, setMutualSpots] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [date, setDate] = useState(false);
+  const [activities, setActivities] = useState('');
+  const [time, setTime] = useState('');
+  const userID = parseInt(localStorage.getItem("userID"));
+  const [id, setId] = useState(0);
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (id) => {
     setOpen(true);
+    setId(id);
   };
 
   const handleClose = () => {
@@ -109,7 +131,7 @@ export default function MutualList(props) {
   };
 
   useEffect(() => {
-    axios.get("/user_spots/mutual").then((res) => {
+    axios.post("/couple_spots/mutual", { userID }).then((res) => {
       console.log("Response has comeback!");
       console.log(res);
       setMutualSpots(res.data);
@@ -141,12 +163,14 @@ export default function MutualList(props) {
     );
   }
 
+  function getSpotById(id) {
+    return spots.filter(spot => spot.id === id)[0];
+  }
+
   return (
     <div className={classes.root}>
       <Grid container component="main" spacing={2}>
-        <CssBaseline />
-
-        <Grid item xs={4} sm={4} md={4}>
+        <Grid item>
           <Typography variant="h6" className={classes.title}>
             You and your partner both chose:
           </Typography>
@@ -156,7 +180,7 @@ export default function MutualList(props) {
                 const labelId = `checkbox-list-secondary-label-${value.id}`;
                 return (
                   <>
-                    <ListItem key={value.id} button onClick={handleClickOpen}>
+                    <ListItem key={value.id} button onClick={() => handleClickOpen(value.id)}>
                       <ListItemAvatar>
                         <Avatar alt={value.title} src={value.image_url} />
                       </ListItemAvatar>
@@ -197,6 +221,7 @@ export default function MutualList(props) {
                             InputLabelProps={{
                               shrink: true,
                             }}
+                            onChange={(e) => setTime(e.target.value)}
                           />
                         </form>
                         <TextField
@@ -207,23 +232,15 @@ export default function MutualList(props) {
                           type="activities"
                           multiline
                           style={{ width: 400 }}
+                          onChange={(e) => setActivities(e.target.value)}
                         />
-                      <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Activities"
-                        type="activities"
-                        multiline
-                        style = {{width: 400}}
-                      />
                     </DialogContent>
                     <DialogActions>
                       <Button onClick={handleClose} color="primary">
                         Cancel
                       </Button>
                       <Button onClick={handleDate} variant="contained" color="primary">
-                        Set Date Spot
+                        Set Date
                       </Button>
                     </DialogActions>
                   </Dialog>
@@ -258,19 +275,40 @@ export default function MutualList(props) {
             />
           </form>
         </Grid> */}
+        <Grid item>
+          {date && <Paper variant="outlined" square className={classes.date}>
+            <Container component="main" align = "center" justify = "center" alignItems = "center">
+              <Typography variant="h5" className={classes.h5}>
+                Date Info
+              </Typography>
+              <Grid container spacing={2}>
+                <SpotCard spot={getSpotById(id)} noButtons={true} className={classes.info}/>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="h6" component="h2">
+                    {dateFormat(time, "dddd, mmmm dS, yyyy, h:MM TT")}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary" component="p" style={{whiteSpace: "pre-line"}}>
+                    {activities}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Container>
+          </Paper>}
+        </Grid>
       </Grid>
 
       <Button
         variant="outlined"
         startIcon={<AddCircleIcon color="primary" />}
         href="/generatelist"
+        className={classes.buttons}
       >
         Add more spots
       </Button>
       {/* <Button type="submit" variant="contained" color="primary">
         Chooose your date spot
       </Button> */}
-      <Button type="submit" variant="contained" color="secondary">
+      <Button type="submit" variant="contained" color="secondary" className={classes.buttons}>
         Pick a random date spot
       </Button>
       {/* <Accordion>
@@ -287,20 +325,6 @@ export default function MutualList(props) {
           </Typography>
         </AccordionDetails>
       </Accordion> */}
-      {date && <Paper variant="outlined" square>
-        <Container component="main" align = "center" justify = "center" alignItems = "center">
-          <Typography variant="h5" className={classes.title}>
-            Your date
-          </Typography>
-          <SpotCard spot={spots[0]} noButtons={true} />
-          <Typography variant="h6" component="h2">
-            Date
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Activity Description
-          </Typography>
-        </Container>
-      </Paper>}
     </div>
   );
 }

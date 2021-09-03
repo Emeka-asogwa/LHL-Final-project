@@ -31,8 +31,8 @@ export default function SpotCard(props) {
   
   function handleClick(selected) {
     console.log("clicked");
-    const user_spot = { partner, selected, user_id: parseInt(localStorage.getItem("userID")), spot_id: spot.id };
-    axios.post("/user_spots", user_spot)
+    const user_spot = { partner_id: partner, selected, user_id: parseInt(localStorage.getItem("userID")), spot_id: spot.id };
+    axios.post("/couple_spots", user_spot)
     .then(res => {
       console.log(res);
       setShow(prev => !prev)
@@ -47,15 +47,15 @@ export default function SpotCard(props) {
             <CardMedia
               className={classes.media}
               image={spot.image_url}
-              title="Contemplative Reptile"
+              title={spot.title}
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
                 {spot.title}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
+              {!noButtons && <Typography variant="body2" color="textSecondary" component="p">
                 {spot.description}
-              </Typography>
+              </Typography>}
             </CardContent>
           </CardActionArea>
           <CardActions>
