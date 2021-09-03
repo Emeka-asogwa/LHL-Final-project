@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
     width: "100%",
     marginTop: "2%",
-    // marginLeft: "2%",
+    marginLeft: "1%",
 
     // paddingLeft: "25%",
     // paddingRight: "25%",
@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
   title: {
-    margin: theme.spacing(4, 0, 2),
+    margin: theme.spacing(4, 3, 2),
   },
   h5: {
     margin: theme.spacing(4, 0, 2),
@@ -96,6 +96,9 @@ const useStyles = makeStyles((theme) => ({
     height: 400,
     border: "solid 0.41em blue",
     borderRadius: "3em",
+  },
+  buttons: {
+    marginLeft: 80,
   },
 }));
 
@@ -298,13 +301,14 @@ export default function MutualList(props) {
         variant="outlined"
         startIcon={<AddCircleIcon color="primary" />}
         href="/generatelist"
+        className={classes.buttons}
       >
         Add more spots
       </Button>
       {/* <Button type="submit" variant="contained" color="primary">
         Chooose your date spot
       </Button> */}
-      <Button type="submit" variant="contained" color="secondary">
+      <Button type="submit" variant="contained" color="secondary" className={classes.buttons}>
         Pick a random date spot
       </Button>
       {/* <Accordion>
