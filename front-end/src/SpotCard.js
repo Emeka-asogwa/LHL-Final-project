@@ -26,6 +26,7 @@ const useStyles = makeStyles({
 export default function SpotCard(props) {
   const classes = useStyles();
   const { spot, partner, noButtons } = props;
+  const margin = props.margin || 0;
   const history = useHistory();
   const [show, setShow] = useState(true);
   
@@ -59,14 +60,14 @@ export default function SpotCard(props) {
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <Link to={{pathname: `/spots/detail`, spot}} style={{ textDecoration: 'none' }}>
+            <Link to={{pathname: `/spots/detail`, spot}} style={{ textDecoration: 'none', marginLeft: 20 + margin}}>
               <Button size="small" color="primary">
                 More Info
               </Button>
             </Link>
             {!noButtons &&
             <>
-            <IconButton onClick={() => { handleClick(false) }}>
+            <IconButton onClick={() => { handleClick(false) }} style={{ marginLeft: 100 }}>
               <CancelIcon color="error" fontSize='medium'/>
             </IconButton>
             <IconButton onClick={() => { handleClick(true) }}>
