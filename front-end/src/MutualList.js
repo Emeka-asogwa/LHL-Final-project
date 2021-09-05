@@ -289,9 +289,9 @@ export default function MutualList(props) {
                   </Typography>
                   <br />
                   <br />
-                  <Typography variant="h6" color="textSecondary">
-                    Activities:
-                  </Typography>
+                  {activities && <Typography variant="h6" color="textSecondary" style={{textDecoration: "underline"}}>
+                    Activities
+                  </Typography>}
                   <Typography variant="body1" color="textSecondary" component="p" style={{whiteSpace: "pre-line"}}>
                     {activities}
                   </Typography>

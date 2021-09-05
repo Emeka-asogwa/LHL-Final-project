@@ -51,7 +51,7 @@ export default function SpotCard(props) {
               title={spot.title}
             />
             <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
+              <Typography gutterBottom variant="h6" component="h2">
                 {spot.title}
               </Typography>
               {!noButtons && <Typography variant="body2" color="textSecondary" component="p">
