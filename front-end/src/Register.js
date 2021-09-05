@@ -72,8 +72,8 @@ export default function Register() {
   }
 
   return (
-    <div className="show-img">
-      <Container component="main" maxWidth="xs" className={classes.mainKey}>
+    <div>
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
