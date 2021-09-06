@@ -143,7 +143,8 @@ export default function MutualList(props) {
   }, []);
 
   useEffect(() => {
-    const currentDate = mutualSpots.filter(spot => spot.time !== null)[0];
+    const currents = mutualSpots.filter(spot => spot.time !== null);
+    const currentDate = currents[currents.length-1];
     if (typeof currentDate === 'object') {
       console.log(currentDate);
       setTime(currentDate.time);

@@ -2,6 +2,8 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import ProductHeroLayout from "./ProductHeroLayout";
+import { useHistory } from "react-router-dom";
+import { useEffect, useState } from 'react';
 
 const backgroundImage =
   'https://source.unsplash.com/5JwBbnyZzfc/';
@@ -34,6 +36,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function HomePage() {
   const classes = useStyles();
+  const history = useHistory();
+
+  useEffect(() => {
+    if (localStorage.getItem("userID")) {
+      history.push('/mutuallist');
+    }
+  }, []);
   
   return (
     <ProductHeroLayout backgroundClassName={classes.background}>
