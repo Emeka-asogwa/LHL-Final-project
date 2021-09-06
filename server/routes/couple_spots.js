@@ -27,7 +27,7 @@ module.exports = (db) => {
       `
       UPDATE couple_spots
       SET time = $1, activities = $2
-      WHERE id = $3;
+      WHERE spot_id = $3;
       `, [time, activities, id]
     ).then((data) => {
       res.json(data.rows);
