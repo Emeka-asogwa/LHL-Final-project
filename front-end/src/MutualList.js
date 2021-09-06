@@ -128,6 +128,10 @@ export default function MutualList(props) {
   const handleDate = () => {
     setOpen(false);
     setDate(true);
+    const data = { id, time, activities };
+    axios.post("/couple_spots/update", data).then((res) => {
+      console.log(res);
+    });
   };
 
   useEffect(() => {
@@ -137,6 +141,18 @@ export default function MutualList(props) {
       setMutualSpots(res.data);
     });
   }, []);
+
+  useEffect(() => {
+    const currentDate = mutualSpots.filter(spot => spot.time !== null)[0];
+    if (typeof currentDate === 'object') {
+      console.log(currentDate);
+      setTime(currentDate.time);
+      setActivities(currentDate.activities);
+      setId(currentDate.spot_id);
+      setDate(true);
+    }
+  }, [mutualSpots]);
+  
   const handleClick = (value) => () => {
     setCard(value);
   };
@@ -155,9 +171,6 @@ export default function MutualList(props) {
   };
 
   function getMutualSpots() {
-    console.log(
-      mutualSpots.map((spot) => spots.filter((s) => s.id === spot.spot_id)[0])
-    );
     return mutualSpots.map(
       (spot) => spots.filter((s) => s.id === spot.spot_id)[0]
     );

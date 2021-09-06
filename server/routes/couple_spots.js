@@ -12,11 +12,24 @@ module.exports = (db) => {
   router.post('/mutual', (req, res) => {
     const { userID } = req.body;
     db.query(`
-      SELECT spot_id FROM couple_spots
+      SELECT * FROM couple_spots
       WHERE (partner1_id = $1 OR partner2_id = $2)
       AND partner1_selected = 't' AND partner2_selected = 't'; 
     `, [userID, userID])
     .then((data) => {
+      res.json(data.rows);
+    })
+  });
+
+  router.post('/update', (req, res) => {
+    const { id, time, activities } = req.body;
+    db.query(
+      `
+      UPDATE couple_spots
+      SET time = $1, activities = $2
+      WHERE id = $3;
+      `, [time, activities, id]
+    ).then((data) => {
       res.json(data.rows);
     })
   });
