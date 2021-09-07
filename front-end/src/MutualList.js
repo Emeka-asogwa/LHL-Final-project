@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     right: 30,
     top: 100,
-    width: 600,
+    width: 590,
     height: 400,
     border: "solid 0.41em blue",
     borderRadius: "3em",
@@ -128,6 +128,10 @@ export default function MutualList(props) {
   const handleDate = () => {
     setOpen(false);
     setDate(true);
+    const data = { id, time, activities };
+    axios.post("/couple_spots/update", data).then((res) => {
+      console.log(res);
+    });
   };
 
   useEffect(() => {
@@ -137,6 +141,19 @@ export default function MutualList(props) {
       setMutualSpots(res.data);
     });
   }, []);
+
+  useEffect(() => {
+    const currents = mutualSpots.filter(spot => spot.time !== null);
+    const currentDate = currents[currents.length-1];
+    if (typeof currentDate === 'object') {
+      console.log(currentDate);
+      setTime(currentDate.time);
+      setActivities(currentDate.activities);
+      setId(currentDate.spot_id);
+      setDate(true);
+    }
+  }, [mutualSpots]);
+  
   const handleClick = (value) => () => {
     setCard(value);
   };
@@ -155,9 +172,6 @@ export default function MutualList(props) {
   };
 
   function getMutualSpots() {
-    console.log(
-      mutualSpots.map((spot) => spots.filter((s) => s.id === spot.spot_id)[0])
-    );
     return mutualSpots.map(
       (spot) => spots.filter((s) => s.id === spot.spot_id)[0]
     );
@@ -250,9 +264,9 @@ export default function MutualList(props) {
             </List>
           </div>
         </Grid>
-        <Grid item xs={8} sm={8} md={8}>
+        {/* <Grid item xs={8} sm={8} md={8}>
           {card && <SpotListItem location={{ spot: card }} />}
-        </Grid>
+        </Grid> */}
         {/* <Grid item xs={12} md={6}>
           <InputLabel className={classes.label}>
             Choose a date and time for your date night:
@@ -281,13 +295,18 @@ export default function MutualList(props) {
               <Typography variant="h5" className={classes.h5}>
                 Date Info
               </Typography>
-              <Grid container spacing={2}>
-                <SpotCard spot={getSpotById(id)} noButtons={true} className={classes.info}/>
+              <Grid container spacing={2} direction="row" justifyContent="center">
+                <SpotCard spot={getSpotById(id)} noButtons={true} margin={15}/>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="h6" component="h2">
                     {dateFormat(time, "dddd, mmmm dS, yyyy, h:MM TT")}
                   </Typography>
-                  <Typography variant="body2" color="textSecondary" component="p" style={{whiteSpace: "pre-line"}}>
+                  <br />
+                  <br />
+                  {activities && <Typography variant="h6" color="textSecondary" style={{textDecoration: "underline"}}>
+                    Activities
+                  </Typography>}
+                  <Typography variant="body1" color="textSecondary" component="p" style={{whiteSpace: "pre-line"}}>
                     {activities}
                   </Typography>
                 </Grid>

@@ -33,11 +33,15 @@ export default function Start(props) {
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
-    axios.get("/users").then((res) => {
-      console.log("Response has comeback!");
-      console.log(res);
-      setUsers(res.data);
-    });
+    // if (localStorage.getItem("userID")) {
+    //   history.push('/mutuallist');
+    // } else {
+      axios.get("/users").then((res) => {
+        console.log("Response has comeback!");
+        console.log(res);
+        setUsers(res.data);
+      });
+    // }
   }, []);
 
   useEffect(() => {
