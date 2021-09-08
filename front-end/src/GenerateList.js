@@ -66,7 +66,7 @@ export default function GenerateList(props) {
   const classes = useStyles();
   const { spots } = props;
   const [activeStep, setActiveStep] = useState(localStorage.getItem('activeStep') || 0);
-  const [partner, setPartner] = useState('');
+  const [partner, setPartner] = useState(localStorage.getItem('partner') || '');
   const [location, setLocation] = useState(localStorage.getItem('location') || '');
   const steps = getSteps();
   const [filteredSpots, setFilteredSpots] = useState(spots);
@@ -182,7 +182,7 @@ export default function GenerateList(props) {
             label="Partner"
             placeholder="Enter your partner's email"
             value={partner}
-            onChange={(e) => setPartner(e.target.value)}
+            onChange={(e) => {localStorage.setItem('partner', e.target.value); setPartner(e.target.value)}}
           />
         </Container>
       );
